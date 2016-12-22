@@ -4,16 +4,16 @@ import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ncu.csie.game.Handler;
+import ncu.csie.game.ClientEnd.GameHandler;
 
 public class Animation {
 	
-	private Handler handler;
+	private GameHandler handler;
 	private int speed, index;
 	private long lastTime, timer;
 	private BufferedImage[] frames;
 	
-	public Animation(Handler handler, int speed, BufferedImage[] frames){
+	public Animation(GameHandler handler, int speed, BufferedImage[] frames){
 		this.handler = handler;
 		this.speed = speed;
 		this.frames = frames;

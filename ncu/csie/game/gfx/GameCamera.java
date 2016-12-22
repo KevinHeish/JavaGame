@@ -1,14 +1,14 @@
 package ncu.csie.game.gfx;
 
-import ncu.csie.game.Handler;
-import ncu.csie.game.entities.Entity;
+import ncu.csie.game.ClientAnimation.EntityRender;
+import ncu.csie.game.ClientEnd.GameHandler;
 import ncu.csie.game.tiles.Tile;
 
 public class GameCamera {
 	
-	private Handler handler;
-	private float xOffset, yOffset;
-	public GameCamera(Handler handler, float xOffset, float yOffset){
+	private GameHandler handler;
+	private double xOffset, yOffset;
+	public GameCamera(GameHandler handler, float xOffset, float yOffset){
 		this.handler = handler;
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
@@ -18,22 +18,22 @@ public class GameCamera {
 		if(xOffset < 0){
 			xOffset = 0;
 		}
-		else if(xOffset > handler.getWorld().getWidth()*Tile.TILEWIDTH - handler.getWidth()){
-			xOffset = handler.getWorld().getWidth()*Tile.TILEWIDTH - handler.getWidth();
+		else if(xOffset > handler.getWidth()*Tile.TILEWIDTH - handler.getWidth()){
+			xOffset = handler.getWidth()*Tile.TILEWIDTH - handler.getWidth();
 		}
 		
 		if(yOffset < 0){
 			yOffset = 0;
 		}
-		else if(yOffset > handler.getWorld().getHeight()*Tile.TILEHEIGHT - handler.getHeight()){
-			yOffset =  handler.getWorld().getHeight()*Tile.TILEHEIGHT - handler.getHeight();
+		else if(yOffset > handler.getHeight()*Tile.TILEHEIGHT - handler.getHeight()){
+			yOffset =  handler.getHeight()*Tile.TILEHEIGHT - handler.getHeight();
 		}
 		
 		
 	}
 	
 	
-	public void centerOnEntity(Entity e){
+	public void centerOnEntity(EntityRender e){
 		xOffset = e.getX() - handler.getWidth() / 2 + e.getWidth()/2;
 		yOffset = e.getY() - handler.getHeight() / 2 + e.getHeight()/2;
 		checkBlankSpace();
@@ -46,16 +46,16 @@ public class GameCamera {
 		checkBlankSpace();
 	}
 	
-	public float getxOffset() {
+	public double getxOffset() {
 		return xOffset;
 	}
-	public void setxOffset(float xOffset) {
+	public void setxOffset(double xOffset) {
 		this.xOffset = xOffset;
 	}
-	public float getyOffset() {
+	public double getyOffset() {
 		return yOffset;
 	}
-	public void setyOffset(float yOffset) {
+	public void setyOffset(double yOffset) {
 		this.yOffset = yOffset;
 	}
 }

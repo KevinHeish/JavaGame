@@ -1,7 +1,7 @@
 package ncu.csie.game.entities.statics;
 
-import ncu.csie.game.Handler;
 import ncu.csie.game.entities.Entity;
+import ncu.csie.game.worlds.Handler;
 
 public abstract class StaticEntity extends Entity{
 	

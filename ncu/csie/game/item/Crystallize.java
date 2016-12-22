@@ -1,42 +1,31 @@
 package ncu.csie.game.item;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ncu.csie.game.Handler;
+import ncu.csie.game.worlds.Handler;
 import ncu.csie.game.entities.Entity;
 import ncu.csie.game.entities.creatures.Player;
-import ncu.csie.game.gfx.Assets;
 
 public class Crystallize extends Item{
-	private int timer;
 	
-	public Crystallize(Handler handler, float x, float y, int width, int height) {
+	public Crystallize(Handler handler, float x, float y, int width, int height, int id) {
 		super(handler, x, y, width, height);
-		timer = 0;
-		itemImage = Assets.crystallize;
+		this.id = id;
 	}
 
 	@Override
-	public void render(Graphics g) {
-		g.drawImage(itemImage, (int) (x-handler.getGameCamera().getxOffset()), 
-				(int) (y-handler.getGameCamera().getyOffset()), width, height, null);
-	}
-
-	@Override
-	public boolean effect() {
+	public boolean effect(int playerId) {
 		int i , boundX , boundY ;
 		int[] offY = {-150,-250,150,-250};
 		int[] offX = {-250,0,-250,-150};
-		String direction = handler.getWorld().getEntityManager().getPlayer().getKey();
-		Player character= handler.getWorld().getEntityManager().getPlayer();
+		String direction = handler.getWorld().getPlayers().get(playerId).getDirection();
+		Player character= handler.getWorld().getPlayers().get(playerId);
 		
 		for (i = 0; i < 4; i++) {
 			if (key[i] == direction){
-
 				break;
 			}
 		}

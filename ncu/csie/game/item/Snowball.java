@@ -5,29 +5,25 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ncu.csie.game.Handler;
+import ncu.csie.game.worlds.Handler;
 import ncu.csie.game.entities.Entity;
 import ncu.csie.game.entities.creatures.Player;
 import ncu.csie.game.gfx.Assets;
 
 public class Snowball extends Item{
 		
-	public Snowball(Handler handler, float x, float y, int width, int height) {
+	public Snowball(Handler handler, float x, float y, int width, int height, int id) {
 		super(handler, x, y, width, height);
-		itemImage = Assets.snowball;
+		this.id = id;
 	}
 
-	@Override
-	public void render(Graphics g) {
-		g.drawImage(itemImage, (int) (x-handler.getGameCamera().getxOffset()), 
-				(int) (y-handler.getGameCamera().getyOffset()), width, height, null);
-	}
+
 	
 	@Override
-	public boolean effect() {
+	public boolean effect(int playerId) {
 		int moveSpeed = 12 ,i;
-		String direction = handler.getWorld().getEntityManager().getPlayer().getKey();
-		Player character= handler.getWorld().getEntityManager().getPlayer();
+		String direction = handler.getWorld().getPlayers().get(playerId).getDirection();
+		Player character= handler.getWorld().getPlayers().get(playerId);
 		
 		
 		for (i = 0; i < 4; i++) {
@@ -40,6 +36,7 @@ public class Snowball extends Item{
 				character.getY()+diffY[i]*150 , 40 , 40 ,moveSpeed);
 		
 		handler.getWorld().getEntityManager().addEntity(thrownBall);
+		System.out.println("Throw PoroKing.");
 		
 		
 		ArrayList<Entity> sEntity = handler.getWorld().getEntityManager().getEntities();
@@ -53,6 +50,7 @@ public class Snowball extends Item{
         			if(sEntity.get(i)==thrownBall){
         				sEntity.remove(i);
         				timer.cancel();
+        				System.out.println("Disapper");
         				break;
         			}
         		}

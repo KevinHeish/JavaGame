@@ -3,8 +3,7 @@ package ncu.csie.game.entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import ncu.csie.game.Handler;
-import ncu.csie.game.item.Item;
+import ncu.csie.game.worlds.Handler;
 
 public abstract class Entity {
 	
@@ -58,7 +57,6 @@ public abstract class Entity {
 	}
 
 	public abstract void tick();
-	public abstract void render(Graphics g);
 	
 	public boolean checkEntityCollisions(double xOffset, double yOffset){
 		for(Entity e: handler.getWorld().getEntityManager().getEntities()){

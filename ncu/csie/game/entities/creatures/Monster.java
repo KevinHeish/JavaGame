@@ -6,23 +6,25 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ncu.csie.game.Handler;
 import ncu.csie.game.entities.Entity;
 import ncu.csie.game.entities.statics.StaticEntity;
 import ncu.csie.game.gfx.Animation;
 import ncu.csie.game.gfx.Assets;
+/*
 import ncu.csie.game.item.Item;
 import ncu.csie.game.item.ItemEntity;
 import ncu.csie.game.item.Snowball;
 import ncu.csie.game.item.SnowballEntity;
+*/
 import ncu.csie.game.tiles.Tile;
+import ncu.csie.game.worlds.Handler;
 
 public class Monster extends Creature{
 	
 	//Record last key released
 	private String key;
 	//Animations
-	private Animation animLeft, animRight;//animDown, animUp, 		
+			
 	//private Monster monster;
 	private int speedup = 0;
 	private int walkSpeed = -1;//run speed
@@ -48,26 +50,7 @@ public class Monster extends Creature{
 		attackSpeed = Attack;
 		losehp = Hp;
 		//
-		if(id<15)//WalkingGrass
-		{
-			animLeft = new Animation(handler, 300, Assets.WalkingGrass_left);
-			animRight = new Animation(handler, 300, Assets.WalkingGrass_right);
-		}
-		else if(id>=15 && id<20)//FireDragon
-		{
-			animLeft = new Animation(handler, 300, Assets.FireDragon_left);
-			animRight = new Animation(handler, 300, Assets.FireDragon_right);
-		}
-		else if(id>=20 && id<25)//Piplup
-		{
-			animLeft = new Animation(handler, 300, Assets.Piplup_left);
-			animRight = new Animation(handler, 300, Assets.Piplup_right);
-		}
-		else//LightingBird
-		{
-			animLeft = new Animation(handler, 300, Assets.LightningBird_left);
-			animRight = new Animation(handler, 300, Assets.LightningBird_right);
-		}
+		
 		key = "left";
 		Timer timer = new Timer();
 		
@@ -78,69 +61,74 @@ public class Monster extends Creature{
 		        public void run(){ 
 		        	changeDerection();
 		        }
-		    },1000,10000);
+		    },5000,10000);
 		}
 	}
 	
 	@Override
 	public void tick() {
 		//Animations
-		animLeft.tick();
-		animRight.tick();		
-		attackDetection();
-		setMove();
-		move();
+				
+		//attackDetection();
+		//setMove();
+		//move();
 	}
 	
 	private void attackDetection() {
 
 		int dr = -1;
+		int count = 1;
 		
 		
-		Player player = handler.getWorld().getEntityManager().getPlayer();
-		if(Math.abs(player.getX() - this.x) < 250.0 && Math.abs(player.getY() - this.y) < 250.0)//region = 200*200
-		{
-			target = player.GetID();
-			this.speed = attackSpeed + speedup;
-			
-			if(Math.abs(player.getX() - this.x) > 50.0)
+		for(int playerIndex = 0 ; playerIndex < count ;playerIndex++ ){
+			Player player = handler.getWorld().getPlayers().get(playerIndex);
+			if(Math.abs(player.getX() - this.x) < 250.0 && Math.abs(player.getY() - this.y) < 250.0)//region = 200*200
 			{
-				if(player.getX() < this.x)
+				target = player.GetID();
+				this.speed = attackSpeed + speedup;
+				
+				if(Math.abs(player.getX() - this.x) > 50.0)
 				{
-					dr = 3;
-					direction = 3;
+					if(player.getX() < this.x)
+					{
+						dr = 3;
+						direction = 3;
+					}
+					else
+					{
+						dr = 1;
+						direction = 1;
+					}
 				}
-				else
+				if(Math.abs(player.getY() - this.y) > 50.0)
 				{
-					dr = 1;
-					direction = 1;
+					if(player.getY() < this.y)
+					{
+						if(dr == -1)direction = 0;
+					}
+					else
+					{
+						if(dr == -1)direction = 2;
+					}
 				}
 			}
-			if(Math.abs(player.getY() - this.y) > 50.0)
+			else
 			{
-				if(player.getY() < this.y)
-				{
-					if(dr == -1)direction = 0;
-				}
-				else
-				{
-					if(dr == -1)direction = 2;
-				}
+				this.speed = walkSpeed + speedup;
+				if(this.speed<=0)
+					this.speed = 0;
+				target = -1;
 			}
-		}
-		else
-		{
-			this.speed = walkSpeed + speedup;
-			if(this.speed<=0)
-				this.speed = 0;
-			target = -1;
 		}
 	}
 	
 	private int clockwiseFind(int startdr) {
 
 		int dr = -1;
-		for(int i=0;i<4;i++)
+		int count = 1;
+		
+		
+		for(int i=0;i<count;i++)
 		{
 			if((startdr+i)%4 == 1){ //Moving right
 				int tx = (int) (this.x + this.speed+bounds.x+bounds.width)/Tile.TILEWIDTH;
@@ -207,7 +195,6 @@ public class Monster extends Creature{
 		
 	}
 
-	
 	@Override
 	public boolean checkEntityCollisions(double xOffset, double yOffset){
 		ArrayList<Entity> e = handler.getWorld().getEntityManager().getEntities();
@@ -241,10 +228,11 @@ public class Monster extends Creature{
 	        		}
 					return true;
 				}*/
-				
+				/*
 				if(e.get(i) instanceof ItemEntity){
 					ArrayList<Entity> list = handler.getWorld().getEntityManager().getEntities();
 					((ItemEntity) e.get(i)).effectResult(list, this);
+					
 					
 					if(e.get(i).getClass().equals(SnowballEntity.class))
 					{
@@ -262,36 +250,12 @@ public class Monster extends Creature{
 					//System.out.println("¼²¨ì©Ô");
 					continue;
 				}
-				
+				*/
 			}
 		}
 		return false;
 	}
 
-	@Override
-	public void render(Graphics g) {
-		g.drawImage(getCurrentAnimationFrame(), (int) (x-handler.getGameCamera().getxOffset()), (int) (y-handler.getGameCamera().getyOffset()), width, height, null);
-	}
-	
-	
-	private BufferedImage getCurrentAnimationFrame(){
-		
-		if(direction == 3){
-			return animLeft.getCurrentFrame();
-		}
-		else if(direction == 1){
-			return animRight.getCurrentFrame();
-		}
-		else if(direction == 0){
-			return animRight.getCurrentFrame();
-		}
-		else if(direction == 2){
-			return animRight.getCurrentFrame();
-		}
-		else{
-			return animRight.getCurrentFrame();
-		}
-	}
 	//
 	public int GetID()
 	{

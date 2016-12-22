@@ -1,8 +1,8 @@
 package ncu.csie.game.entities.creatures;
 
-import ncu.csie.game.Handler;
 import ncu.csie.game.entities.Entity;
 import ncu.csie.game.tiles.Tile;
+import ncu.csie.game.worlds.Handler;
 
 public abstract class Creature extends Entity{
 
@@ -97,7 +97,7 @@ public abstract class Creature extends Entity{
 	}
 	
 	public boolean collissionWithTile(int x, int y){
-		return handler.getWorld().getTile(x, y).isSolid();
+		return handler.getWorld().getTile(x , y).isSolid();
 	}
 	
 	public double getxMove() {

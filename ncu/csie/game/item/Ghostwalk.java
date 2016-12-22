@@ -4,26 +4,21 @@ import java.awt.Graphics;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ncu.csie.game.Handler;
+import ncu.csie.game.worlds.Handler;
 import ncu.csie.game.entities.creatures.Player;
 import ncu.csie.game.gfx.Assets;
 
 public class Ghostwalk extends Item{
 
-	public Ghostwalk(Handler handler, float x, float y, int width, int height) {
+	public Ghostwalk(Handler handler, float x, float y, int width, int height,int id) {
 		super(handler, x, y, width, height);
-		itemImage = Assets.ghost_walk;
+		this.id = id;
 	}
 
-	@Override
-	public void render(Graphics g) {
-		g.drawImage(itemImage, (int) (x-handler.getGameCamera().getxOffset()), 
-				(int) (y-handler.getGameCamera().getyOffset()), width, height, null);
-	}
 	
 	@Override
-	public boolean effect() {
-		Player character= handler.getWorld().getEntityManager().getPlayer();
+	public boolean effect(int playerId) {
+		Player character= handler.getWorld().getPlayers().get(playerId);
 		int value = 5;
 
 		character.setStatusOn(1);
