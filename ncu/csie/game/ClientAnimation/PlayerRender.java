@@ -18,10 +18,6 @@ public class PlayerRender extends CreatureRender{
 	
 	public PlayerRender(GameHandler handler, float x, float y) {
 		super(handler, x , y ,Creature.DEFUAL_CREATURE_WIDTH , Creature.DEFAULT_CREATURE_HEIGHT);
-		animDown = new Animation(handler, 300, Assets.actor1_down);
-		animUp = new Animation(handler, 300, Assets.actor1_up);
-		animLeft = new Animation(handler, 300, Assets.actor1_left);
-		animRight = new Animation(handler, 300, Assets.actor1_right);
 		charIndex = -1;		
 		direction = "down";
 	}
@@ -38,52 +34,52 @@ public class PlayerRender extends CreatureRender{
 		switch(charIndex)
 		{
 		case 0:   //Asuna
-			animDown = new Animation(handler, 250, Assets.actor1_down);
-			animUp = new Animation(handler, 250, Assets.actor1_up);
-			animLeft = new Animation(handler, 250, Assets.actor1_left);
-			animRight = new Animation(handler, 250, Assets.actor1_right);
+			animDown = new Animation(handler, 250, Assets.actor1_down, 2);
+			animUp = new Animation(handler, 250, Assets.actor1_up, 2);
+			animLeft = new Animation(handler, 250, Assets.actor1_left, 2);
+			animRight = new Animation(handler, 250, Assets.actor1_right, 2);
 			hp = 80;
 			break;
 		case 1:   //Hao
-			animDown = new Animation(handler, 250, Assets.actor2_down);
-			animUp = new Animation(handler, 250, Assets.actor2_up);
-			animLeft = new Animation(handler, 250, Assets.actor2_left);
-			animRight = new Animation(handler, 250, Assets.actor2_right);
+			animDown = new Animation(handler, 250, Assets.actor2_down, 2);
+			animUp = new Animation(handler, 250, Assets.actor2_up, 2);
+			animLeft = new Animation(handler, 250, Assets.actor2_left, 2);
+			animRight = new Animation(handler, 250, Assets.actor2_right, 2);
 			hp = 41;
 			break;
 		case 2://Hasiaki
-			animDown = new Animation(handler, 250, Assets.actor3_down);
-			animUp = new Animation(handler, 250, Assets.actor3_up);
-			animLeft = new Animation(handler, 250, Assets.actor3_left);
-			animRight = new Animation(handler, 250, Assets.actor3_right);
+			animDown = new Animation(handler, 250, Assets.actor3_down, 2);
+			animUp = new Animation(handler, 250, Assets.actor3_up, 2);
+			animLeft = new Animation(handler, 250, Assets.actor3_left, 2);
+			animRight = new Animation(handler, 250, Assets.actor3_right, 2);
 			hp = 41;
 			break;
 		case 3://Jade
-			animDown = new Animation(handler, 250, Assets.actor4_down);
-			animUp = new Animation(handler, 250, Assets.actor4_up);
-			animLeft = new Animation(handler, 250, Assets.actor4_left);
-			animRight = new Animation(handler, 250, Assets.actor4_right);
+			animDown = new Animation(handler, 250, Assets.actor4_down, 2);
+			animUp = new Animation(handler, 250, Assets.actor4_up, 2);
+			animLeft = new Animation(handler, 250, Assets.actor4_left, 2);
+			animRight = new Animation(handler, 250, Assets.actor4_right, 2);
 			hp = 50;
 			break;
 		case 4://Sai
-			animDown = new Animation(handler, 250, Assets.actor5_down);
-			animUp = new Animation(handler, 250, Assets.actor5_up);
-			animLeft = new Animation(handler, 250, Assets.actor5_left);
-			animRight = new Animation(handler, 250, Assets.actor5_right);
+			animDown = new Animation(handler, 250, Assets.actor5_down, 2);
+			animUp = new Animation(handler, 250, Assets.actor5_up, 2);
+			animLeft = new Animation(handler, 250, Assets.actor5_left, 2);
+			animRight = new Animation(handler, 250, Assets.actor5_right, 2);
 			hp = 41;
 			break;
 		case 5://Yuki
-			animDown = new Animation(handler, 250, Assets.actor6_down);
-			animUp = new Animation(handler, 250, Assets.actor6_up);
-			animLeft = new Animation(handler, 250, Assets.actor6_left);
-			animRight = new Animation(handler, 250, Assets.actor6_right);
+			animDown = new Animation(handler, 250, Assets.actor6_down, 2);
+			animUp = new Animation(handler, 250, Assets.actor6_up, 2);
+			animLeft = new Animation(handler, 250, Assets.actor6_left, 2);
+			animRight = new Animation(handler, 250, Assets.actor6_right, 2);
 			hp = 50;
 			break;
 		case -1://ghost
-			animDown = new Animation(handler, 250, Assets.ghost_right);
-			animUp = new Animation(handler, 250, Assets.ghost_right);
-			animLeft = new Animation(handler, 250, Assets.ghost_left);
-			animRight = new Animation(handler, 250, Assets.ghost_right);
+			animDown = new Animation(handler, 250, Assets.ghost_right, 2);
+			animUp = new Animation(handler, 250, Assets.ghost_right, 2);
+			animLeft = new Animation(handler, 250, Assets.ghost_left, 2);
+			animRight = new Animation(handler, 250, Assets.ghost_right, 2);
 			hp = 0;
 			break;
 		default:

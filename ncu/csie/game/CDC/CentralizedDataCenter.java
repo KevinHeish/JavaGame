@@ -30,7 +30,7 @@ public class CentralizedDataCenter {
 		ArrayList<Player> playerList = handler.getWorld().getPlayers();
 		ArrayList<Monster> monsterList = handler.getWorld().getMonsters();
 		ArrayList<Item> itemList  = handler.getWorld().getItems();
-		assert monsterList.size()==25;
+		
 		
 		JSONArray allInfo = new JSONArray();
 		

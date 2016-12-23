@@ -8,7 +8,6 @@ import ncu.csie.game.gfx.Assets;
 
 
 public class UltralightEffectRender extends ItemEffectRender{
-	private Animation light;
 	private BufferedImage[] aniDirection;
 	
 	public UltralightEffectRender(GameHandler handler, float x, float y, int width, int height, int i) {
@@ -17,20 +16,16 @@ public class UltralightEffectRender extends ItemEffectRender{
 		aniDirection = new BufferedImage[17];
 
 		if(i == 0){
-			light = new Animation(handler , 0 , Assets.ultra_ani_up);
 			aniDirection = Assets.ultra_ani_up;
 		}
 		else if(i == 1){
-			light = new Animation(handler , 0 , Assets.ultra_ani_right);
 			aniDirection = Assets.ultra_ani_right;
 		}
 		else if(i == 2){
-			light = new Animation(handler , 0 , Assets.ultra_ani_down);
 			aniDirection = Assets.ultra_ani_down;
 			
 		}
 		else if(i == 3){
-			light = new Animation(handler , 0 , Assets.ultra_ani_left);
 			aniDirection = Assets.ultra_ani_left;
 		}
 	}
@@ -45,7 +40,6 @@ public class UltralightEffectRender extends ItemEffectRender{
 	
 	@Override
 	public void tick() {
-		light.tick();
 		timer++;
 	}
 

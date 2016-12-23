@@ -56,8 +56,12 @@ public class GameState extends State{
 				, 5, 5);
 		
 		g.setColor(Color.RED);
-		g.fillRect(10, 10, (int)(handler.getGame().getPlayerRender().getHp()*300/maxblood),15);
 		
+		if(handler.getGame().getPlayerRender().getHp()>=0)
+			g.fillRect(10, 10, (int)(handler.getGame().getPlayerRender().getHp()*300/maxblood),15);
+		else
+			g.fillRect(10, 10, 0,15);
+	
 		g.setColor(Color.BLACK);
 		g.drawRect(10, 10, 300, 15);
 		

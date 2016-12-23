@@ -11,7 +11,6 @@ import ncu.csie.game.gfx.Assets;
 
 public class CrystallizeEffectRender extends ItemEffectRender{
 	private int timer = 0;
-	private Animation wall;
 	private BufferedImage[] wallDirection;
 	private Timer test = new Timer();
 	private int delay = 0;
@@ -19,11 +18,9 @@ public class CrystallizeEffectRender extends ItemEffectRender{
 	public CrystallizeEffectRender(GameHandler handler, float x, float y, int width, int height , int direction) {
 		super(handler, x, y, width, height);
 		if(direction%2 == 1){
-			wall = new Animation(handler , 0 , Assets.crystallizeVertical);
 			wallDirection = Assets.crystallizeVertical;
 		}
 		else{
-			wall = new Animation(handler , 0 , Assets.crystallizeHori);
 			wallDirection = Assets.crystallizeHori;
 		}
 	}
@@ -42,7 +39,6 @@ public class CrystallizeEffectRender extends ItemEffectRender{
 		test.schedule(new TimerTask() {  
             @Override  
             public void run(){  
-            	wall.tick();
         		timer++;
             }
         },delay);

@@ -8,12 +8,10 @@ import ncu.csie.game.gfx.Assets;
 
 public class SnowballEffectRender extends ItemEffectRender {
 	private int moveSpeed;
-	private Animation itemAnimation;
 	
 	public SnowballEffectRender(GameHandler handler, float x, float y, int width, int height,int speed) {
 		super(handler, x, y, width, height);
 		timer = 0;
-		itemAnimation = new Animation(handler , speed , Assets.rollingBall);
 		moveSpeed = speed;
 	}
 
@@ -25,7 +23,6 @@ public class SnowballEffectRender extends ItemEffectRender {
 	
 	@Override
 	public void tick() {
-		itemAnimation.tick();
 		timer++;
 	}
 	

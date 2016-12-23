@@ -88,32 +88,6 @@ public class UDPClientThread extends Thread{
 		}
 
 		
-		/*----------------------------------------------
-		 * test for broadcast to all socket.
-		 * 
-		 * 
-		VirtualCharacter testChar = new VirtualCharacter(50,50);
-		JSONObject charJSONFormat = new JSONObject();
-		String test =  charJSONFormat.toString();
-		bdata = test.getBytes();
-		
-		
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {  
-            @Override  
-            public void run(){
-            	for(int i = 0 ; i < 4 ; i++){
-    				try {
-    					packet = new DatagramPacket(bdata, bdata.length,ipTable[i], 6666);
-    					socket.send(packet);
-    				} catch (IOException e) {
-    					e.printStackTrace();
-    				}
-    			}
-            }
-        },0,5000);
-		*/
-		
 	}
 }
 

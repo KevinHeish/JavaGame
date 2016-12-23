@@ -19,23 +19,23 @@ public class MonsterRender extends CreatureRender{
 		
 		if(id<15)//WalkingGrass
 		{
-			animLeft = new Animation(handler, 300, Assets.WalkingGrass_left);
-			animRight = new Animation(handler, 300, Assets.WalkingGrass_right);
+			animLeft = new Animation(handler, 300, Assets.WalkingGrass_left, 1);
+			animRight = new Animation(handler, 300, Assets.WalkingGrass_right, 1);
 		}
 		else if(id>=15 && id<20)//FireDragon
 		{
-			animLeft = new Animation(handler, 300, Assets.FireDragon_left);
-			animRight = new Animation(handler, 300, Assets.FireDragon_right);
+			animLeft = new Animation(handler, 300, Assets.FireDragon_left, 1);
+			animRight = new Animation(handler, 300, Assets.FireDragon_right, 1);
 		}
 		else if(id>=20 && id<25)//Piplup
 		{
-			animLeft = new Animation(handler, 300, Assets.Piplup_left);
-			animRight = new Animation(handler, 300, Assets.Piplup_right);
+			animLeft = new Animation(handler, 300, Assets.Piplup_left, 1);
+			animRight = new Animation(handler, 300, Assets.Piplup_right, 1);
 		}
 		else//LightingBird
 		{
-			animLeft = new Animation(handler, 300, Assets.LightningBird_left);
-			animRight = new Animation(handler, 300, Assets.LightningBird_right);
+			animLeft = new Animation(handler, 300, Assets.LightningBird_left, 1);
+			animRight = new Animation(handler, 300, Assets.LightningBird_right, 1);
 		}
 	}
 
