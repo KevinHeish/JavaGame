@@ -67,11 +67,10 @@ public class Monster extends Creature{
 	
 	@Override
 	public void tick() {
-		//Animations
-				
-		//attackDetection();
-		//setMove();
-		//move();
+		
+		attackDetection();
+		setMove();
+		move();
 	}
 	
 	private void attackDetection() {
@@ -82,7 +81,7 @@ public class Monster extends Creature{
 		
 		for(int playerIndex = 0 ; playerIndex < count ;playerIndex++ ){
 			Player player = handler.getWorld().getPlayers().get(playerIndex);
-			if(Math.abs(player.getX() - this.x) < 250.0 && Math.abs(player.getY() - this.y) < 250.0)//region = 200*200
+			if(Math.abs(player.getX() - this.x) < 250.0 && Math.abs(player.getY() - this.y) < 250.0 && player.isAlive())//region = 200*200
 			{
 				target = player.GetID();
 				this.speed = attackSpeed + speedup;
@@ -210,24 +209,7 @@ public class Monster extends Creature{
 					return true;
 				}
 				
-				/*if(e.get(i) instanceof Player)//reverse
-				{
-					((Player)e.get(i)).SetBlood(((Player)e.get(i)).GetBlood()-monster.GetLoseHp());
-
-					this.speed = monster.GetSpeed();
-					monster.SetTarget(-1);
-					//monster.SetAttackNextDri(-1);
-					this.setX(4500);
-					this.setY(1500);
-					ArrayList<Entity> sEntity = handler.getWorld().getEntityManager().getEntities();
-					for(int j = 0; j < sEntity.size();j++)
-	        		{
-	        			sEntity.remove(j);
-	        			System.out.println("Disapper");
-	        			break;
-	        		}
-					return true;
-				}*/
+				
 				/*
 				if(e.get(i) instanceof ItemEntity){
 					ArrayList<Entity> list = handler.getWorld().getEntityManager().getEntities();
@@ -299,5 +281,10 @@ public class Monster extends Creature{
 	{
 		return speedup;
 	}
-
+	
+	public int getDirection()
+	{
+		return direction;
+	}
+	
 }

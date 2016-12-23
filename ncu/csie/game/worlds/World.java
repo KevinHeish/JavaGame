@@ -13,7 +13,7 @@ import ncu.csie.game.item.*;
 import ncu.csie.game.tiles.Tile;
 import ncu.csie.game.utils.Utils;
 
-public class World  {
+public class World extends Thread{
 	
 	private Handler handler;
 	private int width, height;
@@ -36,39 +36,27 @@ public class World  {
 		monsters = new ArrayList<Monster>();
 		items = new ArrayList<Item>();
 		
-		/*for(int i = 0 ; i < playerNumbers ; i++){
-			int posX = (int) ((Math.random() * 8000 + 100) - 100) / Tile.TILEWIDTH;
-			int posY = (int) ((Math.random() * 2000 + 100) - 100) / Tile.TILEHEIGHT;
-			// System.out.println(posX +" "+posY);
-			
-			while (tiles[posX][posY] == 4) {
-				posX = (int) ((Math.random() * 8000 + 100) - 100) / Tile.TILEWIDTH;
-				posY = (int) ((Math.random() * 2000 + 100) - 100) / Tile.TILEHEIGHT;
-			}
-			*/
-			Player createPlayer = new Player(handler ,100 , 100, 5 , 0);
-			players.add(createPlayer);
-		//}
-		
+		Player createPlayer = new Player(handler ,100 , 100 , 0);
+		players.add(createPlayer);
 		
 		entityManager = new EntityManager(handler, players);
 		
 		timer.schedule(new TimerTask() {  
             @Override  
             public void run(){
-            	int itemIndex = (int)(Math.random() * 5);
-        		itemGenerator(itemIndex);
+            	//int itemIndex = (int)(Math.random() * 5);
+        		///itemGenerator(itemIndex);
         		if(monsterGenerate.peek()!=null)
         		{
         			Monster monsternew = monsterGenerate.poll();
-        			monsternew.setX(4500);//((int)((Math.random() * 8000+100) - 100));
-        			monsternew.setY(1500);//((int)((Math.random() * 2000+100) - 100));
+        			monsternew.setX(4500);
+        			monsternew.setY(1500);
         			entityManager.addEntity(monsternew);
         		}
             }
         },0 , 5000);
+			
 		
-				
 		for (int i = 0; i < 25; ++i) {
 			int posX = (int) ((Math.random() * 8000 + 100) - 100) / Tile.TILEWIDTH;
 			int posY = (int) ((Math.random() * 2000 + 100) - 100) / Tile.TILEHEIGHT;
@@ -198,7 +186,20 @@ public class World  {
 	{
 		return items;
 	}
-	
-	
+
+	@Override
+	public void run()
+	{
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {  
+	        @Override  
+	        public void run(){
+	        	for(int i = 0; i < monsters.size(); i++){
+	    			monsters.get(i).tick();
+	    		}
+	        }
+		},0 ,25);
+		
+	}
 	
 }

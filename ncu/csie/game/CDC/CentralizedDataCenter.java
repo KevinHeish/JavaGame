@@ -58,6 +58,7 @@ public class CentralizedDataCenter {
 			map.put("id",monsterList.get(i).GetID());
 			map.put("x",monsterList.get(i).getX());
 			map.put("y",monsterList.get(i).getY());
+			map.put("direction", monsterList.get(i).getDirection());
 			
 			JSONObject JSONMonster = new JSONObject(map);
 			allInfo.put(JSONMonster);

@@ -13,6 +13,7 @@ public class UDPClient {
 		if(ClientThread == null){
 			System.out.println("udp broadcasting");
 			ClientThread = new UDPClientThread(handler);
+			//ClientThread.choosenBroadcast();
 			ClientThread.start();
 		}
 	}

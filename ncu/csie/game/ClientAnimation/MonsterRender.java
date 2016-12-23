@@ -10,10 +10,12 @@ import ncu.csie.game.gfx.Assets;
 public class MonsterRender extends CreatureRender{
 	private Animation animLeft, animRight;//animDown, animUp, 
 	private int direction;
+	private int id;
 	
 	public MonsterRender(GameHandler handler, int x , int y, int id)
 	{
 		super(handler , x ,y ,CreatureRender.DEFUAL_CREATURE_WIDTH , CreatureRender.DEFAULT_CREATURE_HEIGHT);
+		this.id = id;
 		
 		if(id<15)//WalkingGrass
 		{
@@ -50,6 +52,7 @@ public class MonsterRender extends CreatureRender{
 	
 	
 	private BufferedImage getCurrentAnimationFrame(){
+		assert direction >=0 && direction <=3;
 		
 		if(direction == 3){
 			return animLeft.getCurrentFrame();
@@ -67,4 +70,11 @@ public class MonsterRender extends CreatureRender{
 			return animRight.getCurrentFrame();
 		}
 	}
+	
+	public void update(int x, int y ,int dir)
+	{
+		updatePosition(x,y);
+		direction = dir;
+	}
+	
 }

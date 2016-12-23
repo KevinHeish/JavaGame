@@ -21,6 +21,7 @@ public class EntityManager {
 			addEntity(player.get(i));
 	
 	}
+	
 	public void tick()
 	{
 		for(int i = 0; i< entities.size() ; i++)

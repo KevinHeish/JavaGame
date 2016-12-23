@@ -21,15 +21,14 @@ public class JSONDecoder {
 		
 		
 		
-		/*=for(int i = 0 ; i < dataSet.length(); i++){
-			parseData = dataSet.getJSONObject(i);*/
+		for(int i = 0 ; i < dataSet.length(); i++){
+			parseData = dataSet.getJSONObject(i);
 		
-			parseData = dataSet.getJSONObject(0);
 			x = parseData.getDouble("x");
 			y = parseData.getDouble("y");
-			id =parseData.getInt("id");
+			id =	 parseData.getInt("id");
 			
-			//if(i < players){
+			if(i < players){
 				int newHp;
 				String direction;
 				boolean skillState;
@@ -40,17 +39,15 @@ public class JSONDecoder {
 				direction = parseData.getString("direction");
 
 				handler.getGame().getPlayerRender().update((int)x,(int) y, newHp, skillState, direction);
-			/*}
-			else if(i < monsters){
-				
+			}
+			else if(i < players + monsters){
+				int direction = parseData.getInt("direction");
+				handler.getGame().getMonsters().get(i - players).update((int)x, (int)y, direction);
 			}
 			else{
-			
+				break;
 			}
-			
-		}*/
-		
-		
+		}
 		
 	}
 }

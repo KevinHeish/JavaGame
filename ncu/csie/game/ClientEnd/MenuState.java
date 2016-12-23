@@ -26,7 +26,6 @@ public class MenuState extends State{
 		uiManager.addObject(new UIImageButton(handler.getWidth()/2-230, handler.getHeight()/2, 450, 50, Assets.btn_instruct, new ClickListener(){
 			@Override
 			public void onClick() {
-				System.out.println("Click Manual.");
 				new Manual(500,300);
 			}}));
 		uiManager.addObject(new UIImageButton(handler.getWidth()/2-230, handler.getHeight()/2+60, 450, 50, Assets.btn_actor, new ClickListener(){

@@ -14,18 +14,17 @@ import ncu.csie.game.gfx.Assets;
 public class GameState extends State{
 	private UIObject itemImg;
 	private UIManager Playerinterface;
-	private int maxblood;
+	private int maxblood = -1;
 	
 	public GameState(GameHandler handler){
 		super(handler);		
 		handler.getMouseManager().setUIManager(null);
-		UDPServer.initUDPServer(handler);
 		
-		maxblood = 100;
 		Playerinterface = new UIManager(handler);
 		Playerinterface.addObject(new UIImage(30, handler.getHeight()*4/5, 120, 120,Assets.bagLoc_img));
 		Playerinterface.addObject(new UIImage(150, handler.getHeight()*4/5, 120, 120,Assets.bagLoc_img));
 		Playerinterface.addObject(new UIImage(handler.getWidth()-300, handler.getHeight()-100, 300, 100,Assets.mapall));
+		maxblood = handler.getGame().getPlayerRender().getHp();
 		//itemImg = new UIObject[2];
 	}
 	
@@ -33,12 +32,11 @@ public class GameState extends State{
 	public void tick() {
 		handler.getKeyManager().tick();
 		handler.getGame().getEntityRenders().tick();
-		/*getItem();
-		if(handler.getGame().getEntityManager().getPlayer().GetBlood()<1)
+		//getItem();
+		if(handler.getGame().getPlayerRender().getHp() < 1)
 		{
-			handler.getGame().buildEnd();
-			State.setState(handler.getGame().endState);
-		}*/
+			handler.getGame().getPlayerRender().setcharIndex(-1);
+		}
 		
 		Playerinterface.tick();
 	}
@@ -48,13 +46,18 @@ public class GameState extends State{
 		handler.getGame().getMap().render(g);
 		handler.getGame().getEntityRenders().render(g);
 		
+		
+		
 		Playerinterface.render(g);
+		
 		g.setColor(Color.WHITE);
-		g.fillOval((int)(handler.getWidth()-300 + 750/30)
-				,(int)(handler.getHeight()-100 + 800/30)
+		g.fillOval((int)(handler.getWidth()-300 + handler.getGame().getPlayerRender().getX()/30)
+				,(int)(handler.getHeight()-100 + handler.getGame().getPlayerRender().getY()/30)
 				, 5, 5);
+		
 		g.setColor(Color.RED);
-		g.fillRect(10, 10, (int)(50*300/maxblood),15);//maxblood*300
+		g.fillRect(10, 10, (int)(handler.getGame().getPlayerRender().getHp()*300/maxblood),15);
+		
 		g.setColor(Color.BLACK);
 		g.drawRect(10, 10, 300, 15);
 		

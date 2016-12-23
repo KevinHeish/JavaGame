@@ -28,8 +28,9 @@ public class Player extends Creature{
 	private int player_id;
 	private String direction;
 	private int connectionId;
+	private boolean alive = true;
 	
-	public Player(Handler handler, float x, float y,int PlayerID , int index) {
+	public Player(Handler handler, float x, float y, int index) {
 		super(handler, x, y, Creature.DEFUAL_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 		
 		bounds.x = 15;
@@ -40,7 +41,6 @@ public class Player extends Creature{
 		//Animations
 		BagCapacity = 2;
 		speed = 10;
-		setPlayerid(player_id);	
 		connectionId = index;
 		direction = "down";
 	}
@@ -49,6 +49,17 @@ public class Player extends Creature{
 	public void tick(){
 		buffcheck();
 		move();
+		if(GetBlood()<1){
+			alive = false;
+			setPlayerid(-1);
+			}
+		if(alive){
+			if(!onFire){
+				onFire = true;
+				burnToDeath();
+			}
+			buffcheck();
+		}
 	}
 	
 	public void getInput(String instruction){
@@ -56,8 +67,8 @@ public class Player extends Creature{
 		yMove = 0;
 		getBuff();
 		
+		
 		if(instruction.equals("up")){
-			System.out.println(instruction);
 			direction = instruction;
 			yMove = -1*GetSpeed();
 			
@@ -153,6 +164,7 @@ public class Player extends Creature{
 	
 	@Override
 	public boolean checkEntityCollisions(double xOffset, double yOffset){
+		if(!alive){return false;}
 		for(Entity e: handler.getWorld().getEntityManager().getEntities()){
 			if(e.equals(this)){
 				continue;
@@ -181,9 +193,10 @@ public class Player extends Creature{
 						if(e == sEntity.get(j))
 						{
 							SetBlood(GetBlood()-((Monster)(sEntity.get(j))).GetLoseHp());
+							e.setX(-100);
+		        			e.setY(-100);
 							handler.getWorld().monsterReborn((Monster)sEntity.get(j));
 							sEntity.remove(j);
-							//System.out.println("Disapper");
 							break;
 						}
 	        		}
@@ -337,29 +350,7 @@ public class Player extends Creature{
 	}
 	
 	public void skillcd() {
-
-		Timer timer = new Timer();
-		switch(GetID()) { 
-		  	case 1: 
-		  		setskillcd(1000);
-		  		break;
-		  	case 2:
-		  		setskillcd(60000);
-		  		break;
-		  	case 3:
-		  		setskillcd(10000);
-		  		break;
-		  	case 4:
-		  		setskillcd(10000);
-		  		break;
-		  	case 5:
-		  		setskillcd(120000);
-		  		break;
-		  	case 6:
-		  		setskillcd(25000);
-		  		break;
-		  		
-		}
+		setskillcd(skillCD*1000);
 	}
 	
 	public void setskillcd(int time){
@@ -404,7 +395,10 @@ public class Player extends Creature{
 		return SkillUse;
 	}
 	
-	
+	public boolean isAlive()
+	{
+		return alive;
+	}
 	/*
 	public int SetBag(Item getItem){
 		for(int i = 0 ; i < BagCapacity ;i++)

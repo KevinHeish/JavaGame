@@ -28,7 +28,30 @@ public class UDPServerThread extends Thread{
 			e.printStackTrace();
 		}
     }
-
+    /*
+    public boolean setCharacter()
+    {
+    	byte[] tempBuffer = new byte[256];
+    	DatagramPacket tempPacket = new DatagramPacket(tempBuffer,tempBuffer.length );
+    	
+    	while(true){
+			try {
+				socket.receive(tempPacket);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			try {
+				String client = new String(packet.getData(), 0, packet.getLength());
+				if(client!=null){	
+					System.out.println(client);
+					return true;
+				}
+			} catch (NumberFormatException e) {
+				System.out.println(e);
+			}
+    	}
+    }
+*/
     
 	@Override
 	public void run() {

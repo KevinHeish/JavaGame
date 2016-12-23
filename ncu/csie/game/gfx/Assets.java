@@ -11,6 +11,7 @@ public class Assets {
 	public static BufferedImage[] actor4_down, actor4_up, actor4_left, actor4_right;
 	public static BufferedImage[] actor5_down, actor5_up, actor5_left, actor5_right;
 	public static BufferedImage[] actor6_down, actor6_up, actor6_left, actor6_right;
+	public static BufferedImage[] ghost_left, ghost_right;
 	public static BufferedImage[] FireDragon_left, FireDragon_right, Piplup_left, Piplup_right, WalkingGrass_left, WalkingGrass_right, LightningBird_left, LightningBird_right;
 	public static BufferedImage[] btn_start, btn_actor ,btn_instruct,btn_option,btn_exit,btn_right, btn_left, btn_back;
 	public static BufferedImage[] title_img;
@@ -54,6 +55,9 @@ public class Assets {
 		actor6_up =  new BufferedImage[4];
 		actor6_left =  new BufferedImage[4];
 		actor6_right =  new BufferedImage[4];
+		
+		ghost_left =  new BufferedImage[1];
+		ghost_right =  new BufferedImage[1];
 		
 		FireDragon_left = new BufferedImage[4];
 		FireDragon_right = new BufferedImage[4];
@@ -217,6 +221,9 @@ public class Assets {
 		actor6_right[1] = ImageLoader.loadImage("/character/Yuki_r_2.png");
 		actor6_right[2] = ImageLoader.loadImage("/character/Yuki_r_1.png");
 		actor6_right[3] = ImageLoader.loadImage("/character/Yuki_r_3.png");
+		
+		ghost_left[0] = ImageLoader.loadImage("/character/ghost_left.png");
+		ghost_right[0] = ImageLoader.loadImage("/character/ghost_right.png");
 		
 		FireDragon_left[0] = ImageLoader.loadImage("/monster/FireDragonL1.png");
 		FireDragon_left[1] = ImageLoader.loadImage("/monster/FireDragonL2.png");

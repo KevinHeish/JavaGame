@@ -20,7 +20,7 @@ public class TCPClient {
 	}
 	
 	
-	public static void inputMoves(String instruction)
+	public static void send(String instruction)
 	{
 		PrintStream messageSend;   	
     	

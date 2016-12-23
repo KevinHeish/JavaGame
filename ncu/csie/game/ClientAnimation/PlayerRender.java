@@ -12,7 +12,7 @@ import ncu.csie.game.gfx.Assets;
 
 public class PlayerRender extends CreatureRender{
 	private Animation animDown, animUp, animLeft, animRight;
-	private int playerId , hp;
+	private int charIndex , hp;
 	private String direction;
 	private boolean skill;
 	
@@ -22,59 +22,69 @@ public class PlayerRender extends CreatureRender{
 		animUp = new Animation(handler, 300, Assets.actor1_up);
 		animLeft = new Animation(handler, 300, Assets.actor1_left);
 		animRight = new Animation(handler, 300, Assets.actor1_right);
-		this.playerId = 0;
+		charIndex = -1;		
 		direction = "down";
 	}
-	
 	
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(getCurrentAnimationFrame(), (int) (x-handler.getGameCamera().getxOffset()),
 				(int) (y-handler.getGameCamera().getyOffset()), width, height, null);
 	}
-	
-	
-	
-	public void setPlayerid(int player)
+		
+	public void setcharIndex(int player)
 	{
-		playerId = player;
-		switch(playerId)
+		charIndex = player;
+		switch(charIndex)
 		{
 		case 0:   //Asuna
 			animDown = new Animation(handler, 250, Assets.actor1_down);
 			animUp = new Animation(handler, 250, Assets.actor1_up);
 			animLeft = new Animation(handler, 250, Assets.actor1_left);
 			animRight = new Animation(handler, 250, Assets.actor1_right);
+			hp = 80;
 			break;
 		case 1:   //Hao
 			animDown = new Animation(handler, 250, Assets.actor2_down);
 			animUp = new Animation(handler, 250, Assets.actor2_up);
 			animLeft = new Animation(handler, 250, Assets.actor2_left);
 			animRight = new Animation(handler, 250, Assets.actor2_right);
+			hp = 41;
 			break;
 		case 2://Hasiaki
 			animDown = new Animation(handler, 250, Assets.actor3_down);
 			animUp = new Animation(handler, 250, Assets.actor3_up);
 			animLeft = new Animation(handler, 250, Assets.actor3_left);
 			animRight = new Animation(handler, 250, Assets.actor3_right);
+			hp = 41;
 			break;
 		case 3://Jade
 			animDown = new Animation(handler, 250, Assets.actor4_down);
 			animUp = new Animation(handler, 250, Assets.actor4_up);
 			animLeft = new Animation(handler, 250, Assets.actor4_left);
 			animRight = new Animation(handler, 250, Assets.actor4_right);
+			hp = 50;
 			break;
 		case 4://Sai
 			animDown = new Animation(handler, 250, Assets.actor5_down);
 			animUp = new Animation(handler, 250, Assets.actor5_up);
 			animLeft = new Animation(handler, 250, Assets.actor5_left);
 			animRight = new Animation(handler, 250, Assets.actor5_right);
+			hp = 41;
 			break;
 		case 5://Yuki
 			animDown = new Animation(handler, 250, Assets.actor6_down);
 			animUp = new Animation(handler, 250, Assets.actor6_up);
 			animLeft = new Animation(handler, 250, Assets.actor6_left);
 			animRight = new Animation(handler, 250, Assets.actor6_right);
+			hp = 50;
+			break;
+		case -1://ghost
+			animDown = new Animation(handler, 250, Assets.ghost_right);
+			animUp = new Animation(handler, 250, Assets.ghost_right);
+			animLeft = new Animation(handler, 250, Assets.ghost_left);
+			animRight = new Animation(handler, 250, Assets.ghost_right);
+			hp = 0;
 			break;
 		default:
 			break;
@@ -107,29 +117,29 @@ public class PlayerRender extends CreatureRender{
 	
 	private void getInput(){
 		if(handler.getKeyManager().up){
-			TCPClient.inputMoves("up");
+			TCPClient.send("up");
 		}
 		else if(handler.getKeyManager().down){
-			TCPClient.inputMoves("down");
+			TCPClient.send("down");
 		}
 		else if(handler.getKeyManager().left){
-			TCPClient.inputMoves("left");
+			TCPClient.send("left");
 		}
 		else if(handler.getKeyManager().right){
-			TCPClient.inputMoves("right");
+			TCPClient.send("right");
 		}
 		
 		//System.out.println(GetSpeed());
 		//Item can be used simultaneously when moving.
 		
 		if(handler.getKeyManager().item1){
-			TCPClient.inputMoves("useItem1");
+			TCPClient.send("useItem1");
 		}
 		if(handler.getKeyManager().item2){
-			TCPClient.inputMoves("useItem2");
+			TCPClient.send("useItem2");
 		}
 		if(handler.getKeyManager().skill){
-			TCPClient.inputMoves("useSkill");	
+			TCPClient.send("useSkill");	
 		}
 	}
 
@@ -144,10 +154,14 @@ public class PlayerRender extends CreatureRender{
 	}
 	
 	public void update(int x , int y, int hp , boolean skillUseable ,String direction){
-				
+		this.hp = hp;
 		updatePosition(x , y);
 		skill = skillUseable;
 		this.direction = direction;
 	}
 	
+	public int getHp()
+	{
+		return hp;
+	}
 }

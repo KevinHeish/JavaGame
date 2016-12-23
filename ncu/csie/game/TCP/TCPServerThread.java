@@ -5,8 +5,11 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ncu.csie.game.UDP.UDPClient;
+import ncu.csie.game.entities.creatures.Monster;
 import ncu.csie.game.worlds.Handler;
 
 public class TCPServerThread extends Thread {
@@ -17,6 +20,7 @@ public class TCPServerThread extends Thread {
 		private ArrayList<PlayerThread> ThreadList;
 		private InetAddress[] ipTable;
 		private Handler handler;
+		private Timer timer;
 		
 		public TCPServerThread(int port, Handler handler)
 		{
@@ -55,6 +59,8 @@ public class TCPServerThread extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			chooseCharacterState();
 		}
 		
 		public InetAddress[] getIPTable()
@@ -62,6 +68,32 @@ public class TCPServerThread extends Thread {
 			return ipTable;
 		}
 		
+		public void chooseCharacterState()
+		{
+			boolean[] characterList = {true, true, true, true, true ,true};
+			boolean[] connectionList = {false, false, false , false};
+			String index = null;
+			
+			
+			while(connectionList[0]==false){
+				for(int i = 0 ; i < maxConnection ; i++){
+					while(index==null){
+						index = ThreadList.get(i).getInstruction();
+					}
+					assert index!=null;
+					
+					int number = Integer.parseInt(index); 
+					assert number>=0 && number<=5;
+					
+					System.out.println(number);
+					if(characterList[number]==true){
+						handler.getWorld().getPlayers().get(i).setPlayerid(number);
+						connectionList[i] = true;
+						characterList[number] = false;
+					}
+				}
+			}
+		}
 		
 		@Override
 		public void run()
@@ -72,7 +104,7 @@ public class TCPServerThread extends Thread {
 				{
 					handler.getWorld().getPlayers().get(i).getInput(
 							ThreadList.get(i).getInstruction());
-					handler.getWorld().getEntityManager().tick();
+					handler.getWorld().getPlayers().get(i).tick();
 				}
 			}
 		}

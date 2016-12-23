@@ -34,7 +34,6 @@ public class Game implements Runnable{
 	private Map map;
 	private PlayerRender playerRender;
 	private EntityRenderManager entitiesManager;
-	private MonsterRender testMonster;
 	private ArrayList<MonsterRender> monsterList;
 	private int localPlayerId;
 	private ItemRender testItem;
@@ -57,20 +56,24 @@ public class Game implements Runnable{
 		choosecharater = new ChooseCharater(handler);
 		menuState = new MenuState(handler);
 		display = new Display(title, width, height);
+		monsterList = new ArrayList<MonsterRender>();
 		//------------------setup end----------------------
 		
 		//------------------player monster-------------
 		entitiesManager = new EntityRenderManager(handler);
 		
-		playerRender = new PlayerRender(handler , 300 ,300);
+		playerRender = new PlayerRender(handler , 0 ,0 );
 		entitiesManager.getEntities().add(playerRender);
 		
-		testMonster = new MonsterRender(handler, 200,200,16);
-		entitiesManager.getEntities().add(testMonster);
+		for(int i = 0 ; i < 25 ; i++)
+		{
+			MonsterRender generator = new MonsterRender(handler, -1 , -1, i);
+			monsterList.add(generator);
+			entitiesManager.getEntities().add(generator);
+		}
 		
 		testItem = new ItemRender(handler , 400,400,50,50 ,4);
 		entitiesManager.getEntities().add(testItem);
-		
 
 	}
 	
@@ -198,6 +201,11 @@ public class Game implements Runnable{
 	public PlayerRender getPlayerRender()
 	{
 		return playerRender;
+	}
+	
+	public ArrayList<MonsterRender> getMonsters()
+	{
+		return monsterList;
 	}
 	
 	public EntityRenderManager getEntityRenders()

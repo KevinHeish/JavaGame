@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import ncu.csie.game.TCP.TCPClient;
 import ncu.csie.game.TCP.TCPServer;
+import ncu.csie.game.UDP.UDPServer;
 import ncu.csie.game.entities.Entity;
 import ncu.csie.game.entities.creatures.Player;
 import ncu.csie.game.gfx.Assets;
@@ -18,6 +19,7 @@ public class ChooseCharater extends State{
 		handler.getMouseManager().setUIManager(uiManager);
 		uiManager.addObject(new UIImage(0,0,handler.getWidth(),handler.getHeight(),Assets.back_img));
 		uiManager.addObject(new UIImage(250,00,600,150,Assets.game_start));
+		
 		
 		
 		uiManager.addObject(new UIImageButton(100,140, 120, 250, Assets.choose_Asuna, new ClickListener(){
@@ -67,11 +69,17 @@ public class ChooseCharater extends State{
 	
 	public void start_game(int game_type)
 	{
+		
 		handler.getMouseManager().setUIManager(null);
 		TCPClient.connectServer("127.0.0.1", 8080);
-		handler.getGame().gameState = new GameState(handler);
+		UDPServer.initUDPServer(handler);
+		TCPClient.send(Integer.toString(game_type));
+		//UDPServer.setCharacter();
 		
+		handler.getGame().getPlayerRender().setcharIndex(game_type);
+		handler.getGame().gameState = new GameState(handler);
 		State.setState(handler.getGame().gameState);
+		UDPServer.startUDPServer();
 	}
 
 }

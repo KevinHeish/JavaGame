@@ -21,7 +21,7 @@ import ncu.csie.game.worlds.Handler;
 
 
 public class UDPClientThread extends Thread{
-	private byte[] bdata ;
+	private byte[] bdata;
 	private InetAddress[] ipTable;
 	private DatagramPacket packet;
     private DatagramSocket socket;
@@ -43,17 +43,42 @@ public class UDPClientThread extends Thread{
         CDCTest = new CentralizedDataCenter(handler);
 	}
 	
+	/*
+	public void choosenBroadcast()
+	{
+		byte[] output = new byte[64];
+		JSONArray index = new JSONArray();
+		DatagramPacket tempPacket;
+		
+		for(int i = 0 ; i < players.size(); i++){
+			Map map = new HashMap();
+			map.put("id", handler.getWorld().getPlayers().get(i).GetID());
+			
+			JSONObject JObject = new JSONObject(map);
+			
+			index.put(JObject);
+		}
+		output = index.toString().getBytes();
+		
+		tempPacket = new DatagramPacket(output, output.length,ipTable[0], 6666);
+		try {
+			socket.send(tempPacket);
+			System.out.println("check UDPClient send.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}*/
 
 	@Override
 	public void run() {
 		while(true){
-			String test = null;
+			String gameData = null;
 			
 			
-			test = CDCTest.Encoder();
+			gameData = CDCTest.Encoder();
 			assert bdata.length==2048;
 			
-			bdata = test.getBytes();
+			bdata = gameData.getBytes();
 			packet = new DatagramPacket(bdata, bdata.length,ipTable[0], 6666);
 			try {
 				socket.send(packet);	

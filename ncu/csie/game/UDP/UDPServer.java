@@ -9,7 +9,17 @@ public class UDPServer {
 	{
 		if(UDPrecieveThread==null){ 
 			UDPrecieveThread = new UDPServerThread(handler);
-			UDPrecieveThread.start();
 		}
 	}
+	
+	public static void startUDPServer()
+	{
+		UDPrecieveThread.start();
+	}
+	/*
+	public static void setCharacter()
+	{
+		UDPrecieveThread.setCharacter();
+	}*/
+	
 }
