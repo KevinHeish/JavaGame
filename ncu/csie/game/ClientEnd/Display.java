@@ -6,19 +6,20 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Panel;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 
-import ncu.csie.game.Interface.Interface;
 
 public class Display {
 	
 	private JFrame frame;
 	private Panel panel;
-	private Canvas canvas;
-	private Interface inter = new Interface();
+	private Canvas canvas;	
 	private String title;
 	private int width, height;
+	private DialogPassLinkData dialogPassLinkData;
+	private DialogWaitForLink dialogWaitForLink;
 	
 	public Display(String title, int width, int height){
 		this.title = title;
@@ -48,8 +49,23 @@ public class Display {
 		frame.add(panel);
 		panel.add(canvas);
 		frame.pack();
+		
+		dialogPassLinkData = new DialogPassLinkData();
+		dialogPassLinkData.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
+		dialogWaitForLink = new DialogWaitForLink();
+		dialogWaitForLink.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialogWaitForLink.getOkButton().setEnabled(false);
 	}
 	
+	public DialogPassLinkData getDialogPassLinkData() {
+		return dialogPassLinkData;
+	}
+
+	public DialogWaitForLink getDialogWaitForLink() {
+		return dialogWaitForLink;
+	}
+
 	public Canvas getCanvas(){
 		return canvas;
 	}

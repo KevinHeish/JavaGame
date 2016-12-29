@@ -26,26 +26,41 @@ public class CentralizedDataCenter {
 	}
 	
 	public String Encoder(){
-		String test = new String();
+		String result = new String();
 		ArrayList<Player> playerList = handler.getWorld().getPlayers();
 		ArrayList<Monster> monsterList = handler.getWorld().getMonsters();
 		ArrayList<Item> itemList  = handler.getWorld().getItems();
-		
-		
 		JSONArray allInfo = new JSONArray();
+		
+		Map count = new HashMap();
+		
+		count.put("players", playerList.size());
+		count.put("monsters", monsterList.size());
+		count.put("items", itemList.size());
+		JSONObject sizeCounts = new JSONObject(count);
+		allInfo.put(sizeCounts);
 		
 		
 		for(int i = 0 ; i < playerList.size() ;i++)
 		{
 			Map map = new HashMap();
 			
-			map.put("id", playerList.get(i).getConnectionId());
+			map.put("id", playerList.get(i).getID());
 			map.put("x", playerList.get(i).getX());
 			map.put("y", playerList.get(i).getY());
 			map.put("skill", playerList.get(i).GetSkillUse());
 			map.put("hp", playerList.get(i).GetBlood());
 			map.put("direction" , playerList.get(i).getDirection());
 			
+			if(playerList.get(i).GetBag(0)!=null)
+				map.put("item1", playerList.get(i).GetBag(0).getId());
+			else
+				map.put("item1", -1);
+			
+			if(playerList.get(i).GetBag(1)!=null)
+				map.put("item2", playerList.get(i).GetBag(1).getId());
+			else
+				map.put("item2", -1);
 			
 			
 			JSONObject JSONPlayer = new JSONObject(map);
@@ -56,8 +71,8 @@ public class CentralizedDataCenter {
 			Map map = new HashMap();
 			
 			map.put("id",monsterList.get(i).GetID());
-			map.put("x",monsterList.get(i).getX());
-			map.put("y",monsterList.get(i).getY());
+			map.put("x", monsterList.get(i).getX());
+			map.put("y", monsterList.get(i).getY());
 			map.put("direction", monsterList.get(i).getDirection());
 			
 			JSONObject JSONMonster = new JSONObject(map);
@@ -75,8 +90,8 @@ public class CentralizedDataCenter {
 			JSONObject JSONItem = new JSONObject(map);
 			allInfo.put(JSONItem);
 		}
-		test = allInfo.toString();
+		result = allInfo.toString();
 		
-		return test;
+		return result;
 	}
 }

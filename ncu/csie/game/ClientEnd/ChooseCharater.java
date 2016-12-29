@@ -21,7 +21,6 @@ public class ChooseCharater extends State{
 		uiManager.addObject(new UIImage(250,00,600,150,Assets.game_start));
 		
 		
-		
 		uiManager.addObject(new UIImageButton(100,140, 120, 250, Assets.choose_Asuna, new ClickListener(){
 			@Override
 			public void onClick() {
@@ -69,17 +68,22 @@ public class ChooseCharater extends State{
 	
 	public void start_game(int game_type)
 	{
-		
+		boolean start = false;
 		handler.getMouseManager().setUIManager(null);
-		TCPClient.connectServer("127.0.0.1", 8080);
 		UDPServer.initUDPServer(handler);
+		
 		TCPClient.send(Integer.toString(game_type));
 		//UDPServer.setCharacter();
 		
 		handler.getGame().getPlayerRender().setcharIndex(game_type);
 		handler.getGame().gameState = new GameState(handler);
-		State.setState(handler.getGame().gameState);
+		
+		while(start==false){
+			start = TCPClient.waitMessage();
+		}
+		
 		UDPServer.startUDPServer();
+		State.setState(handler.getGame().gameState);
 	}
 
 }

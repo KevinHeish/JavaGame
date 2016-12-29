@@ -16,10 +16,6 @@ public class UDPServer {
 	{
 		UDPrecieveThread.start();
 	}
-	/*
-	public static void setCharacter()
-	{
-		UDPrecieveThread.setCharacter();
-	}*/
+	
 	
 }

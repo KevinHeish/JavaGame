@@ -36,16 +36,27 @@ public class World extends Thread{
 		monsters = new ArrayList<Monster>();
 		items = new ArrayList<Item>();
 		
-		Player createPlayer = new Player(handler ,100 , 100 , 0);
+		Player createPlayer = new Player(handler ,100 , 100);
 		players.add(createPlayer);
+		
+		Player createPlayer2 = new Player(handler ,300 , 200);
+		players.add(createPlayer2);
+		createPlayer2.setPlayerid(3);
+		
+		Player createPlayer3 = new Player(handler ,500 , 300);
+		players.add(createPlayer3);
+		createPlayer3.setPlayerid(5);
+		
+		Player createPlayer4 = new Player(handler ,600 , 100);
+		players.add(createPlayer4);
+		createPlayer4.setPlayerid(2);
 		
 		entityManager = new EntityManager(handler, players);
 		
 		timer.schedule(new TimerTask() {  
             @Override  
             public void run(){
-            	//int itemIndex = (int)(Math.random() * 5);
-        		///itemGenerator(itemIndex);
+            	
         		if(monsterGenerate.peek()!=null)
         		{
         			Monster monsternew = monsterGenerate.poll();
@@ -56,6 +67,11 @@ public class World extends Thread{
             }
         },0 , 5000);
 			
+		for(int i = 0 ; i < 15 ; i++){
+			int itemIndex = (int)(Math.random() * 5);
+			
+			itemGenerator(itemIndex);
+		}
 		
 		for (int i = 0; i < 25; ++i) {
 			int posX = (int) ((Math.random() * 8000 + 100) - 100) / Tile.TILEWIDTH;
@@ -200,6 +216,12 @@ public class World extends Thread{
 	        }
 		},0 ,25);
 		
+	}
+	
+	public void itemRemoved(Item item)
+	{	
+		item.setX(99999);
+		item.setY(99999);
 	}
 	
 }

@@ -51,4 +51,11 @@ public class ItemRender extends EntityRender{
 			}
 		}
 	}
+	
+	public void update(int x, int y ,int id)
+	{
+		this.x = x;
+		this.y = y;
+		setItemImage(id);
+	}
 }

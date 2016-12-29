@@ -1,21 +1,22 @@
 package ncu.csie.game.ClientEnd;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
-import ncu.csie.game.ClientAnimation.CrystallizeEffectRender;
+import javax.swing.Timer;
+
 import ncu.csie.game.ClientAnimation.EntityRenderManager;
 import ncu.csie.game.ClientAnimation.ItemRender;
 import ncu.csie.game.ClientAnimation.MonsterRender;
 import ncu.csie.game.ClientAnimation.PlayerRender;
-import ncu.csie.game.ClientAnimation.UltralightEffectRender;
-import ncu.csie.game.UDP.UDPServer;
-import ncu.csie.game.entities.creatures.Monster;
-import ncu.csie.game.entities.creatures.Player;
+import ncu.csie.game.ClientAnimation.VirtualCharRender;
+import ncu.csie.game.TCP.TCPClient;
 import ncu.csie.game.gfx.Assets;
 import ncu.csie.game.gfx.GameCamera;
-import ncu.csie.game.worlds.World;
+
 
 public class Game implements Runnable{
 	
@@ -36,7 +37,9 @@ public class Game implements Runnable{
 	private EntityRenderManager entitiesManager;
 	private ArrayList<MonsterRender> monsterList;
 	private int localPlayerId;
-	private ItemRender testItem;
+	private ArrayList<ItemRender> itemList;
+	private ActionListener actionListener;
+	private VirtualCharRender[] otherPlayers;
 	//---------------------------------------------
 	
 	
@@ -62,18 +65,34 @@ public class Game implements Runnable{
 		//------------------player monster-------------
 		entitiesManager = new EntityRenderManager(handler);
 		
+		
 		playerRender = new PlayerRender(handler , 0 ,0 );
 		entitiesManager.getEntities().add(playerRender);
 		
+		itemList = new ArrayList<ItemRender>();
+		
+		otherPlayers = new VirtualCharRender[3];
+		
+		for(int i = 0 ; i < 3 ; i++)
+		{
+			otherPlayers[i] = new VirtualCharRender(handler , 0 , 0);
+			entitiesManager.getEntities().add(otherPlayers[i]);
+		}
+		
+		
 		for(int i = 0 ; i < 25 ; i++)
 		{
-			MonsterRender generator = new MonsterRender(handler, -1 , -1, i);
+			MonsterRender generator = new MonsterRender(handler, 0 , 0, i);
 			monsterList.add(generator);
 			entitiesManager.getEntities().add(generator);
 		}
 		
-		testItem = new ItemRender(handler , 400,400,50,50 ,4);
-		entitiesManager.getEntities().add(testItem);
+		for(int i = 0 ; i < 15 ; i++)
+		{
+			ItemRender generator = new ItemRender(handler, 0,0 , 50 ,50 , 0);
+			itemList.add(generator);
+			entitiesManager.getEntities().add(generator);
+		}
 
 	}
 	
@@ -85,6 +104,42 @@ public class Game implements Runnable{
 		display.getCanvas().addMouseMotionListener(mouseManager);	
 		
 		State.setState(menuState);
+		
+		actionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				boolean flag = false;
+				
+				if(e.getSource().equals(display.getDialogPassLinkData().getOkButton())){
+					
+					String ip = display.getDialogPassLinkData().getInputIP();
+					int port = Integer.parseInt(display.getDialogPassLinkData().getInputPort());				
+					
+					localPlayerId = TCPClient.connectServer(ip, port);
+					assert localPlayerId >=0;
+					
+					display.getDialogPassLinkData().dispose();
+					display.getDialogWaitForLink().setVisible(true);
+					
+				}
+				
+				while(flag == false){
+					flag = TCPClient.waitMessage();
+					display.getDialogWaitForLink().getLabelMsg().setText("waiting");
+				}
+				
+				display.getDialogWaitForLink().getOkButton().setEnabled(true);
+				
+				display.getDialogWaitForLink().setVisible(false);
+				handler.getMouseManager().setUIManager(handler.getGame().choosecharater.getUImanager());
+				State.setState(handler.getGame().choosecharater);
+				
+			}
+		};
+		
+		display.getDialogPassLinkData().getOkButton().addActionListener(actionListener);
+		display.getDialogPassLinkData().getCancelButton().addActionListener(actionListener);
+		display.getDialogWaitForLink().getOkButton().addActionListener(actionListener);
 		
 	}
 	
@@ -213,9 +268,21 @@ public class Game implements Runnable{
 		return entitiesManager;
 	}
 	
-	public ItemRender getItemRender()
+	public ArrayList<ItemRender> getItems()
 	{
-		return testItem;
+		return itemList;
 	}
 	
+	public Display getDisplay() {
+		return display;
+	}
+	
+	public int getLocalPlayerId(){
+		return localPlayerId;
+	}
+	
+	public VirtualCharRender[] getOtherPlayers()
+	{
+		return otherPlayers;
+	}
 }

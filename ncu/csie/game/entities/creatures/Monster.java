@@ -83,7 +83,7 @@ public class Monster extends Creature{
 			Player player = handler.getWorld().getPlayers().get(playerIndex);
 			if(Math.abs(player.getX() - this.x) < 250.0 && Math.abs(player.getY() - this.y) < 250.0 && player.isAlive())//region = 200*200
 			{
-				target = player.GetID();
+				target = player.getID();
 				this.speed = attackSpeed + speedup;
 				
 				if(Math.abs(player.getX() - this.x) > 50.0)
@@ -209,6 +209,24 @@ public class Monster extends Creature{
 					return true;
 				}
 				
+				if(e.get(i) instanceof Player)
+				{
+					((Player)e.get(i)).SetBlood(((Player)e.get(i)).GetBlood()-GetLoseHp());
+					this.setX(-100);
+					this.setY(-100);
+					
+					ArrayList<Entity> sEntity = handler.getWorld().getEntityManager().getEntities();
+					for(int j = 0; j < sEntity.size();j++)
+	        		{
+						if(this == sEntity.get(j))
+						{
+							handler.getWorld().monsterReborn((Monster)sEntity.get(j));
+							sEntity.remove(j);
+							break;
+						}
+	        		}
+					return true;
+				}
 				
 				/*
 				if(e.get(i) instanceof ItemEntity){

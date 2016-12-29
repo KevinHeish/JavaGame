@@ -66,7 +66,7 @@ public class UDPServerThread extends Thread{
                 String client = new String(packet.getData(),0,packet.getLength());
                 
                 //System.out.println("Recieve");
-                //System.out.println(client);
+                System.out.println(client);
                 
                 decoder.parser(client);
                 

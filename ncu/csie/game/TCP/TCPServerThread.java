@@ -1,15 +1,16 @@
 package ncu.csie.game.TCP;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 import ncu.csie.game.UDP.UDPClient;
-import ncu.csie.game.entities.creatures.Monster;
 import ncu.csie.game.worlds.Handler;
 
 public class TCPServerThread extends Thread {
@@ -20,7 +21,7 @@ public class TCPServerThread extends Thread {
 		private ArrayList<PlayerThread> ThreadList;
 		private InetAddress[] ipTable;
 		private Handler handler;
-		private Timer timer;
+		private Queue<String> test = new LinkedList<String>();
 		
 		public TCPServerThread(int port, Handler handler)
 		{
@@ -38,29 +39,45 @@ public class TCPServerThread extends Thread {
 		public void waitConnection()
 		{
 			int connectionId = 0;
+			PrintStream messageSend;
 			
 			System.out.println("Wait for connection......");
 			while(connectionId < maxConnection )
 			{
 				try {
 					clientSockets = serverSocket.accept();
-					players = new PlayerThread(clientSockets);
+					players = new PlayerThread(clientSockets,this);
 					ipTable[connectionId] = players.getIpAddress();
 					
 					ThreadList.add(players);
+					try {
+						messageSend = new PrintStream(ThreadList.get(connectionId).getSocket().getOutputStream());
+						messageSend.println(connectionId+1);
+						messageSend.flush();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 					connectionId++;
 				} catch (IOException e){
 					e.printStackTrace();
 				}
 			}
-			
+
 			try {
 				serverSocket.close();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+			try {
+				this.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			sendToClient("chooseState");
 			chooseCharacterState();
+			sendToClient("start");
+			
 		}
 		
 		public InetAddress[] getIPTable()
@@ -75,7 +92,8 @@ public class TCPServerThread extends Thread {
 			String index = null;
 			
 			
-			while(connectionList[0]==false){
+			//while(( connectionList[0] & connectionList[1])==false){
+			while( connectionList[0]==false){
 				for(int i = 0 ; i < maxConnection ; i++){
 					while(index==null){
 						index = ThreadList.get(i).getInstruction();
@@ -85,7 +103,6 @@ public class TCPServerThread extends Thread {
 					int number = Integer.parseInt(index); 
 					assert number>=0 && number<=5;
 					
-					System.out.println(number);
 					if(characterList[number]==true){
 						handler.getWorld().getPlayers().get(i).setPlayerid(number);
 						connectionList[i] = true;
@@ -93,6 +110,28 @@ public class TCPServerThread extends Thread {
 					}
 				}
 			}
+			
+		}
+		
+		public void sendToClient(String message){
+			PrintStream messageSend;
+
+			for(int i = 0; i < maxConnection ;i++)
+			{
+				try {
+					messageSend = new PrintStream(ThreadList.get(i).getSocket().getOutputStream());
+					messageSend.println(message);
+					messageSend.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+		public Queue<String> getQueue()
+		{
+			return test;
 		}
 		
 		@Override
@@ -100,12 +139,9 @@ public class TCPServerThread extends Thread {
 		{
 			while(true)
 			{
-				for(int i = 0 ; i< maxConnection ;i++)
-				{
-					handler.getWorld().getPlayers().get(i).getInput(
-							ThreadList.get(i).getInstruction());
-					handler.getWorld().getPlayers().get(i).tick();
-				}
+				handler.getWorld().getPlayers().get(0).getInput(
+						ThreadList.get(0).getInstruction());
+				handler.getWorld().getPlayers().get(0).tick();
 			}
 		}
 }

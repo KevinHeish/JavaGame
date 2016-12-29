@@ -15,6 +15,7 @@ public class PlayerRender extends CreatureRender{
 	private int charIndex , hp;
 	private String direction;
 	private boolean skill;
+	private int[] bag = {-1,-1};
 	
 	public PlayerRender(GameHandler handler, float x, float y) {
 		super(handler, x , y ,Creature.DEFUAL_CREATURE_WIDTH , Creature.DEFAULT_CREATURE_HEIGHT);
@@ -149,15 +150,22 @@ public class PlayerRender extends CreatureRender{
 		handler.getGameCamera().centerOnEntity(this);
 	}
 	
-	public void update(int x , int y, int hp , boolean skillUseable ,String direction){
+	public void update(int x , int y, int hp , boolean skillUseable ,String direction,int item1, int item2){
 		this.hp = hp;
 		updatePosition(x , y);
 		skill = skillUseable;
 		this.direction = direction;
+		bag[0] = item1;
+		bag[1] = item2;
 	}
 	
 	public int getHp()
 	{
 		return hp;
+	}
+	
+	public int[] getBag()
+	{
+		return bag;
 	}
 }

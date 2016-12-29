@@ -6,12 +6,13 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class PlayerThread extends Thread{
+public class PlayerThread implements Runnable{
 	private Socket mySocket;
-
+	private TCPServerThread host;
 	
-	public PlayerThread(Socket s){
+	public PlayerThread(Socket s , TCPServerThread host){
 		this.mySocket = s;
+		this.host = host;
 	}
 
 	public String getInstruction()
@@ -30,4 +31,21 @@ public class PlayerThread extends Thread{
 	public InetAddress getIpAddress() {
 		return mySocket.getInetAddress();
 	}
+	
+	public Socket getSocket()
+	{
+		return mySocket;
+	}
+
+	@Override
+	public void run() {
+		/*while(true){
+			String result = getInstruction();
+			host.getQueue().offer(result); 
+		}*/
+		
+	}
+	
+	
+	
 }

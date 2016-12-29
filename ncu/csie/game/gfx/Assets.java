@@ -16,6 +16,7 @@ public class Assets {
 	public static BufferedImage[] btn_start, btn_actor ,btn_instruct,btn_option,btn_exit,btn_right, btn_left, btn_back;
 	public static BufferedImage[] title_img;
 	public static BufferedImage flash , crystallize , ghost_walk , snowball,snowballEntity ,ultralight;
+	public static BufferedImage[] skill;
 	public static BufferedImage[] rollingBall;
 	public static BufferedImage[] illustrations;
 	public static BufferedImage[] ultra_ani_right , ultra_ani_down ,ultra_ani_up , ultra_ani_left;
@@ -95,6 +96,7 @@ public class Assets {
 		crystallizeVertical = new BufferedImage[18];
 		crystallizeHori = new BufferedImage[18];
 		
+		skill = new BufferedImage[5];
 		
 		btn_start[0] = ImageLoader.loadImage("/textures/btn1.png");
 		btn_start[1] = ImageLoader.loadImage("/textures/btn2.png");
@@ -334,12 +336,15 @@ public class Assets {
 		tree = ImageLoader.loadImage("/obstacles/BigTree1.png");
 		
 		game_start = ImageLoader.loadImage("/textures/gamestart.png");
-		flash = ImageLoader.loadImage("/item/flash.PNG");
-		crystallize = ImageLoader.loadImage("/item/crystallize.PNG");
-		ghost_walk = ImageLoader.loadImage("/item/ghost_walk.PNG");
-		snowball = ImageLoader.loadImage("/item/snowball.PNG");
-		ultralight = ImageLoader.loadImage("/item/Ultralight.PNG");
+		
+		skill[1] = flash = ImageLoader.loadImage("/item/flash.PNG");
+		skill[2] = crystallize = ImageLoader.loadImage("/item/crystallize.PNG");
+		skill[4] = ghost_walk = ImageLoader.loadImage("/item/ghost_walk.PNG");
+		skill[3] = snowball = ImageLoader.loadImage("/item/snowball.PNG");
+		skill[0] = ultralight = ImageLoader.loadImage("/item/Ultralight.PNG");
 		snowballEntity = ImageLoader.loadImage("/item/snowballEntity.png");
+		
+		
 		flashDisplay = ImageLoader.loadImage("/item/flash_ani.png");
 	}
 }

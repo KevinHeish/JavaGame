@@ -11,6 +11,8 @@ import ncu.csie.game.TCP.TCPClient;
 import ncu.csie.game.entities.Entity;
 import ncu.csie.game.gfx.Animation;
 import ncu.csie.game.gfx.Assets;
+import ncu.csie.game.item.Item;
+import ncu.csie.game.item.ItemEntity;
 //import ncu.csie.game.item.Item;
 //import ncu.csie.game.item.ItemEntity;
 import ncu.csie.game.tiles.Tile;
@@ -20,17 +22,16 @@ public class Player extends Creature{
 	private int blood, orispeed, speed, skillCD;
 	private char type;
 	private boolean SkillUse = true; //Can use skill or not
-	//private Item[] bag = {null, null};
+	private Item[] bag = {null, null};
 	private int BagCapacity; //How many things in the bag
 	private int status[] = {0,0,0};//mapbuff,itembuff,skillbuff
 	private Timer timer;
 	private boolean onFire = false;
 	private int player_id;
 	private String direction;
-	private int connectionId;
 	private boolean alive = true;
 	
-	public Player(Handler handler, float x, float y, int index) {
+	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFUAL_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 		
 		bounds.x = 15;
@@ -41,7 +42,6 @@ public class Player extends Creature{
 		//Animations
 		BagCapacity = 2;
 		speed = 10;
-		connectionId = index;
 		direction = "down";
 	}
 	
@@ -170,36 +170,18 @@ public class Player extends Creature{
 				continue;
 			}
 			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))){
-				/*if(e instanceof ItemEntity)
+				if(e instanceof ItemEntity)
 				{
-					//System.out.println("Do something");
 					return false;
 				}
-				
 				
 				else if(e instanceof Item)
 				{
 					int index = this.SetBag((Item)e);
+					
 					if(index!=-1)
-						handler.getWorld().getEntityManager().itemRemoved(index , player_id);
-					return false;
-				}
-				*/
-				if(e instanceof Monster)
-				{
-					ArrayList<Entity> sEntity = handler.getWorld().getEntityManager().getEntities();
-					for(int j = 0; j < sEntity.size();j++)
-	        		{
-						if(e == sEntity.get(j))
-						{
-							SetBlood(GetBlood()-((Monster)(sEntity.get(j))).GetLoseHp());
-							e.setX(-100);
-		        			e.setY(-100);
-							handler.getWorld().monsterReborn((Monster)sEntity.get(j));
-							sEntity.remove(j);
-							break;
-						}
-	        		}
+						handler.getWorld().itemRemoved((Item)e);
+					
 					return false;
 				}
 				
@@ -252,7 +234,7 @@ public class Player extends Creature{
 
 		ArrayList<Entity> e = handler.getWorld().getEntityManager().getEntities();
 		Timer timer = new Timer();
-		switch(GetID()) { 
+		switch(getID()) { 
 		case 1:
 	  		for(int i=0;i<e.size();i++){
         		if(e.get(i) instanceof Monster){
@@ -371,7 +353,7 @@ public class Player extends Creature{
 		return type;
 	}
 	
-	public int GetID(){
+	public int getID(){
 		return player_id;
 	}
 	
@@ -399,7 +381,7 @@ public class Player extends Creature{
 	{
 		return alive;
 	}
-	/*
+	
 	public int SetBag(Item getItem){
 		for(int i = 0 ; i < BagCapacity ;i++)
 		{
@@ -420,7 +402,7 @@ public class Player extends Creature{
 	public Item GetBag(int index){
 		return bag[index];
 	}
-	*/
+	
 	
 	
 	
@@ -458,8 +440,5 @@ public class Player extends Creature{
 		return direction;
 	}
 	
-	public int getConnectionId()
-	{
-		return connectionId;
-	}
+
 }

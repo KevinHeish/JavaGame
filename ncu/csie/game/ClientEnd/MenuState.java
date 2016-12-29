@@ -20,8 +20,7 @@ public class MenuState extends State{
 			public void onClick() {
 				//handler.getMouseManager().setUIManager(null);
 				//State.setState(handler.getGame().gameState);
-				handler.getMouseManager().setUIManager(handler.getGame().choosecharater.getUImanager());
-				State.setState(handler.getGame().choosecharater);
+				handler.getGame().getDisplay().getDialogPassLinkData().setVisible(true);
 			}}));
 		uiManager.addObject(new UIImageButton(handler.getWidth()/2-230, handler.getHeight()/2, 450, 50, Assets.btn_instruct, new ClickListener(){
 			@Override
