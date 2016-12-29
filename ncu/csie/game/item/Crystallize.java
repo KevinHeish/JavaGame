@@ -25,7 +25,7 @@ public class Crystallize extends Item{
 		Player character= handler.getWorld().getPlayers().get(playerId);
 		
 		for (i = 0; i < 4; i++) {
-			if (key[i] == direction){
+			if (direction.equals(key[i])){
 				break;
 			}
 		}
@@ -54,7 +54,6 @@ public class Crystallize extends Item{
         		{
         			if(sEntity.get(j)==test){
         				sEntity.remove(j);
-        				System.out.println("wall Destroyed");
         				break;
         			}
         		}

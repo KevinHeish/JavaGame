@@ -10,6 +10,8 @@ import ncu.csie.game.entities.Entity;
 import ncu.csie.game.entities.statics.StaticEntity;
 import ncu.csie.game.gfx.Animation;
 import ncu.csie.game.gfx.Assets;
+import ncu.csie.game.item.Item;
+import ncu.csie.game.item.ItemEntity;
 /*
 import ncu.csie.game.item.Item;
 import ncu.csie.game.item.ItemEntity;
@@ -211,29 +213,22 @@ public class Monster extends Creature{
 				
 				if(e.get(i) instanceof Player)
 				{
+					if(!((Player)e.get(i)).isAlive()){continue;}
 					((Player)e.get(i)).SetBlood(((Player)e.get(i)).GetBlood()-GetLoseHp());
 					this.setX(-100);
 					this.setY(-100);
 					
-					ArrayList<Entity> sEntity = handler.getWorld().getEntityManager().getEntities();
-					for(int j = 0; j < sEntity.size();j++)
-	        		{
-						if(this == sEntity.get(j))
-						{
-							handler.getWorld().monsterReborn((Monster)sEntity.get(j));
-							sEntity.remove(j);
-							break;
-						}
-	        		}
+					handler.getWorld().monsterReborn(this);
+						
 					return true;
 				}
 				
-				/*
+				
 				if(e.get(i) instanceof ItemEntity){
 					ArrayList<Entity> list = handler.getWorld().getEntityManager().getEntities();
 					((ItemEntity) e.get(i)).effectResult(list, this);
 					
-					
+					/*
 					if(e.get(i).getClass().equals(SnowballEntity.class))
 					{
 						for(int index = 0 ; index < list.size(); index++)
@@ -244,13 +239,13 @@ public class Monster extends Creature{
 							}
 						}
 					}
-					
+					*/
 				}
+				
 				else if(e.get(i) instanceof Item){
-					//System.out.println("¼²¨ì©Ô");
 					continue;
 				}
-				*/
+				
 			}
 		}
 		return false;

@@ -33,7 +33,7 @@ public class Ultralight extends Item{
 		
 		
 		for (i = 0; i < 4; i++) {
-			if (key[i] == direction){
+			if (direction.equals(key[i])){
 				if(i==0)
 					offY = 700;
 				else if(i==3)
@@ -66,7 +66,6 @@ public class Ultralight extends Item{
             	for(int j = 0; j < sEntity.size();j++)
         		{
         			if(sEntity.get(j)==test){
-        				
         				sEntity.remove(j);
         				break;
         			}

@@ -30,7 +30,7 @@ public class ItemRender extends EntityRender{
 		switch(index)
 		{
 			case 0:{
-				itemImage = Assets.crystallize;
+				itemImage = Assets.ultralight;
 				break;
 			}
 			case 1:{
@@ -38,15 +38,15 @@ public class ItemRender extends EntityRender{
 				break;
 			}
 			case 2:{
-				itemImage = Assets.snowball;
+				itemImage = Assets.crystallize;
 				break;
 			}
 			case 3:{
-				itemImage = Assets.ghost_walk;
+				itemImage = Assets.snowball;
 				break;
 			}
 			case 4:{
-				itemImage = Assets.ultralight;
+				itemImage = Assets.ghost_walk;
 				break;
 			}
 		}

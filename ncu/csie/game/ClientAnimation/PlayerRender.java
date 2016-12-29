@@ -14,6 +14,7 @@ public class PlayerRender extends CreatureRender{
 	private Animation animDown, animUp, animLeft, animRight;
 	private int charIndex , hp;
 	private String direction;
+	private BufferedImage skillImage;
 	private boolean skill;
 	private int[] bag = {-1,-1};
 	
@@ -40,6 +41,7 @@ public class PlayerRender extends CreatureRender{
 			animLeft = new Animation(handler, 250, Assets.actor1_left, 2);
 			animRight = new Animation(handler, 250, Assets.actor1_right, 2);
 			hp = 80;
+			skillImage = Assets.heal;
 			break;
 		case 1:   //Hao
 			animDown = new Animation(handler, 250, Assets.actor2_down, 2);
@@ -47,6 +49,7 @@ public class PlayerRender extends CreatureRender{
 			animLeft = new Animation(handler, 250, Assets.actor2_left, 2);
 			animRight = new Animation(handler, 250, Assets.actor2_right, 2);
 			hp = 41;
+			skillImage = Assets.speedup2;
 			break;
 		case 2://Hasiaki
 			animDown = new Animation(handler, 250, Assets.actor3_down, 2);
@@ -54,6 +57,7 @@ public class PlayerRender extends CreatureRender{
 			animLeft = new Animation(handler, 250, Assets.actor3_left, 2);
 			animRight = new Animation(handler, 250, Assets.actor3_right, 2);
 			hp = 41;
+			skillImage = Assets.speedup;
 			break;
 		case 3://Jade
 			animDown = new Animation(handler, 250, Assets.actor4_down, 2);
@@ -61,6 +65,7 @@ public class PlayerRender extends CreatureRender{
 			animLeft = new Animation(handler, 250, Assets.actor4_left, 2);
 			animRight = new Animation(handler, 250, Assets.actor4_right, 2);
 			hp = 50;
+			skillImage = Assets.holdmonster;
 			break;
 		case 4://Sai
 			animDown = new Animation(handler, 250, Assets.actor5_down, 2);
@@ -68,6 +73,7 @@ public class PlayerRender extends CreatureRender{
 			animLeft = new Animation(handler, 250, Assets.actor5_left, 2);
 			animRight = new Animation(handler, 250, Assets.actor5_right, 2);
 			hp = 41;
+			skillImage = Assets.monsterslow2;
 			break;
 		case 5://Yuki
 			animDown = new Animation(handler, 250, Assets.actor6_down, 2);
@@ -75,6 +81,7 @@ public class PlayerRender extends CreatureRender{
 			animLeft = new Animation(handler, 250, Assets.actor6_left, 2);
 			animRight = new Animation(handler, 250, Assets.actor6_right, 2);
 			hp = 50;
+			skillImage = Assets.monsterslow;
 			break;
 		case -1://ghost
 			animDown = new Animation(handler, 250, Assets.ghost_right, 2);
@@ -125,10 +132,6 @@ public class PlayerRender extends CreatureRender{
 		else if(handler.getKeyManager().right){
 			TCPClient.send("right");
 		}
-		
-		//System.out.println(GetSpeed());
-		//Item can be used simultaneously when moving.
-		
 		if(handler.getKeyManager().item1){
 			TCPClient.send("useItem1");
 		}
@@ -162,6 +165,15 @@ public class PlayerRender extends CreatureRender{
 	public int getHp()
 	{
 		return hp;
+	}
+	
+	public boolean getSkillUse(){ 
+		return skill;
+	}
+	
+	public BufferedImage getSkillImage()
+	{
+		return skillImage;
 	}
 	
 	public int[] getBag()

@@ -13,8 +13,10 @@ import ncu.csie.game.gfx.Assets;
 
 public class GameState extends State{
 	private UIObject[] itemImg;
+	private UIObject skillImage;
 	private UIManager Playerinterface;
 	private int maxblood = -1;
+	private boolean[] bagIsFull = {false, false};
 	
 	public GameState(GameHandler handler){
 		super(handler);		
@@ -24,6 +26,7 @@ public class GameState extends State{
 		Playerinterface.addObject(new UIImage(30, handler.getHeight()*4/5, 120, 120,Assets.bagLoc_img));
 		Playerinterface.addObject(new UIImage(150, handler.getHeight()*4/5, 120, 120,Assets.bagLoc_img));
 		Playerinterface.addObject(new UIImage(handler.getWidth()-300, handler.getHeight()-100, 300, 100,Assets.mapall));
+		skillImage = new UIImage(10, 40, 50, 50,handler.getGame().getPlayerRender().getSkillImage());
 		maxblood = handler.getGame().getPlayerRender().getHp();
 		itemImg = new UIObject[2];
 	}
@@ -45,6 +48,7 @@ public class GameState extends State{
 	public void render(Graphics g) {
 		handler.getGame().getMap().render(g);
 		handler.getGame().getEntityRenders().render(g);
+		skilldraw();
 		
 		Playerinterface.render(g);
 		
@@ -52,6 +56,15 @@ public class GameState extends State{
 		g.fillOval((int)(handler.getWidth()-300 + handler.getGame().getPlayerRender().getX()/30)
 				,(int)(handler.getHeight()-100 + handler.getGame().getPlayerRender().getY()/30)
 				, 5, 5);
+		
+		for(int i = 0 ; i < 3 ; i++){
+			if(i==0)g.setColor(Color.BLUE);
+			else if(i==1)g.setColor(Color.GREEN);
+			else if(i==2)g.setColor(Color.ORANGE);
+			g.fillOval((int)(handler.getWidth()-300 + handler.getGame().getOtherPlayers()[i].getX()/30)
+					,(int)(handler.getHeight()-100 + handler.getGame().getOtherPlayers()[i].getY()/30)
+					, 5, 5);
+		}
 		
 		g.setColor(Color.RED);
 		
@@ -62,29 +75,59 @@ public class GameState extends State{
 	
 		g.setColor(Color.BLACK);
 		g.drawRect(10, 10, 300, 15);
+		g.drawRect(10, 40, 50, 50);
 		
 		
 	}
 	
+	public void skilldraw(){
+		if(handler.getGame().getPlayerRender().getSkillUse())
+		{
+			for(int k = 0; k < Playerinterface.getObjects().size();k++){
+				if(Playerinterface.getObjects().get(k) == skillImage)
+				{
+					return;
+				}
+			}
+				Playerinterface.addObject(skillImage);
+		}
+		
+		else
+		{
+			for(int k = 0; k < Playerinterface.getObjects().size();k++){
+				if(Playerinterface.getObjects().get(k) == skillImage){
+					Playerinterface.getObjects().remove(k);
+					System.out.println("Delete.");
+					break;
+				}
+			}
+		}
+		
+	}
 	
 	public void getItem(){
 		int[] bag = handler.getGame().getPlayerRender().getBag();
 		
 		
 		for(int i= 0 ; i < 2 ; i++){
-			if(bag[i]==-1){
-				for(int k = 0; k < Playerinterface.getObjects().size();k++){
-					if(Playerinterface.getObjects().get(k) == itemImg[i]){
-						Playerinterface.getObjects().remove(k);
-						itemImg[i] = null;
-					}
+			if(bag[i]!=-1){
+				if(bagIsFull[i] == false){
+					itemImg[i] = new UIImage(45+i*120, handler.getHeight()*4/5+15, 90, 90,
+						Assets.skill[bag[i]]);
+					Playerinterface.addObject(itemImg[i]);
+					bagIsFull[i] = true;
 				}
 			}
 			else
 			{
-				itemImg[i] = new UIImage(45+i*120, handler.getHeight()*4/5+15, 90, 90,
-						Assets.skill[bag[i]]);
-				Playerinterface.addObject(itemImg[i]);
+				for(int k = 0; k < Playerinterface.getObjects().size();k++){
+					if(Playerinterface.getObjects().get(k) == itemImg[i]){
+						Playerinterface.getObjects().remove(k);
+						itemImg[i] = null;
+						bagIsFull[i] = false;
+						break;
+					}
+				}
 			}
 		}
 		

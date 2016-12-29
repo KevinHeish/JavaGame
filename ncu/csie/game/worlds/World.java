@@ -36,18 +36,18 @@ public class World extends Thread{
 		monsters = new ArrayList<Monster>();
 		items = new ArrayList<Item>();
 		
-		Player createPlayer = new Player(handler ,100 , 100);
+		Player createPlayer = new Player(handler ,100 , 100,0);
 		players.add(createPlayer);
 		
-		Player createPlayer2 = new Player(handler ,300 , 200);
+		Player createPlayer2 = new Player(handler ,300 , 200,1);
 		players.add(createPlayer2);
 		createPlayer2.setPlayerid(3);
 		
-		Player createPlayer3 = new Player(handler ,500 , 300);
+		Player createPlayer3 = new Player(handler ,500 , 300,2);
 		players.add(createPlayer3);
 		createPlayer3.setPlayerid(5);
 		
-		Player createPlayer4 = new Player(handler ,600 , 100);
+		Player createPlayer4 = new Player(handler ,600 , 100,3);
 		players.add(createPlayer4);
 		createPlayer4.setPlayerid(2);
 		
@@ -60,9 +60,9 @@ public class World extends Thread{
         		if(monsterGenerate.peek()!=null)
         		{
         			Monster monsternew = monsterGenerate.poll();
+        			
         			monsternew.setX(4500);
         			monsternew.setY(1500);
-        			entityManager.addEntity(monsternew);
         		}
             }
         },0 , 5000);

@@ -13,8 +13,6 @@ import ncu.csie.game.gfx.Animation;
 import ncu.csie.game.gfx.Assets;
 import ncu.csie.game.item.Item;
 import ncu.csie.game.item.ItemEntity;
-//import ncu.csie.game.item.Item;
-//import ncu.csie.game.item.ItemEntity;
 import ncu.csie.game.tiles.Tile;
 import ncu.csie.game.worlds.Handler;
 
@@ -30,8 +28,9 @@ public class Player extends Creature{
 	private int player_id;
 	private String direction;
 	private boolean alive = true;
+	private int index;
 	
-	public Player(Handler handler, float x, float y) {
+	public Player(Handler handler, float x, float y, int index) {
 		super(handler, x, y, Creature.DEFUAL_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 		
 		bounds.x = 15;
@@ -43,6 +42,7 @@ public class Player extends Creature{
 		BagCapacity = 2;
 		speed = 10;
 		direction = "down";
+		this.index = index;
 	}
 	
 	@Override
@@ -90,34 +90,35 @@ public class Player extends Creature{
 		
 		//System.out.println(GetSpeed());
 		//Item can be used simultaneously when moving.
-		/*
-		if(instruction=="useItem1"){
-			Item useCase = GetBag(0);
-			if(useCase!=null){
-				System.out.println("D Pressed");
-				if(useCase.effect()){
-					DeleteBag(0);
-				}
-			}
-		}
 		
-		if(instruction=="useItem2"){
-			Item useCase = GetBag(1);
-			if(useCase!=null){
-				System.out.println("F Pressed");
-				if(useCase.effect()){
-					DeleteBag(1);
+		if(alive){
+			if(instruction.equals("useItem1")){
+				Item useCase = GetBag(0);
+				if(useCase!=null){
+					if(useCase.effect(index)){
+						DeleteBag(0);
+					}
+				}
+				
+			}
+			
+			if(instruction.equals("useItem2")){
+				Item useCase = GetBag(1);
+				if(useCase!=null){
+					if(useCase.effect(index)){
+						DeleteBag(1);
+					}
 				}
 			}
-		}
-		*/
-		if(instruction.equals("useSkill"))
-		{
-			if(GetSkillUse()==true){
-				useSkill();
+			
+			if(instruction.equals("useSkill"))
+			{
+				if(GetSkillUse()==true){
+					useSkill();
+				}
+				skillcd();
+				speed = GetSpeed();			
 			}
-			skillcd();
-			speed = GetSpeed();			
 		}
 	}
 	
@@ -139,23 +140,25 @@ public class Player extends Creature{
 		switch(player_id)
 		{
 		case 0:   //Asuna
-			setInfo(80,6,'w',15);
+			setInfo(80,6,'w',60);
 			break;
 		case 1:   //Hao
 			setInfo(41,9,'f',15);
 			break;
 		case 2://Hasiaki
-			setInfo(41,8,'g',15);
+			setInfo(41,8,'g',120);
 			break;
 		case 3://Jade
 			setInfo(50,8,'f',15);
 			break;
 		case 4://Sai
-			setInfo(41,9,'g',15);
+			setInfo(41,9,'g',10);
 			break;
 		case 5://Yuki
-			setInfo(50,8,'w',15);
+			setInfo(50,8,'w',10);
 			break;
+		case -1://Ghost
+			setInfo(0,8,'a',10);
 		default:
 			break;
 		}
@@ -183,6 +186,7 @@ public class Player extends Creature{
 						handler.getWorld().itemRemoved((Item)e);
 					
 					return false;
+					
 				}
 				
 				return true;
@@ -234,11 +238,11 @@ public class Player extends Creature{
 
 		ArrayList<Entity> e = handler.getWorld().getEntityManager().getEntities();
 		Timer timer = new Timer();
-		switch(getID()) { 
-		case 1:
+		switch(getID()+1) { 
+		case 2:
 	  		for(int i=0;i<e.size();i++){
         		if(e.get(i) instanceof Monster){
-        			if(((Monster)e.get(i)).GetTarget()==1){
+        			if(((Monster)e.get(i)).GetTarget()==getID()){
         				((Monster)e.get(i)).setSpeedup(-5);
         			}
 			
@@ -249,28 +253,26 @@ public class Player extends Creature{
 	            public void run() { 
 	            	for(int i=0;i<e.size();i++){
 	            		if(e.get(i) instanceof Monster){
-	            			//if(((Monster)e.get(i)).getMonsterInfo().GetTarget()!=-1){
+	            			
 	            				((Monster)e.get(i)).setSpeedup(0);
-	            			//}
+	            		
 	  			
 	            		}
 	            	}
 	            }  
 	  		},5000);  
 	  			break;
-		  	case 2:
-		  		if(GetBlood()<80&&GetBlood()>=70){
+		  	case 1:
+		  		if(GetBlood()<80){
 		  			SetBlood(80);
 		  		}
-		  		else{
-		  			SetBlood(GetBlood()+10);
-		  		}
+		  		
 		  		break;
 		  		
-		  	case 3:	  		
+		  	case 5:	  		
 		  		for(int i=0;i<e.size();i++){
 	        		if(e.get(i) instanceof Monster){
-	        			if(((Monster)e.get(i)).GetTarget()==1){
+	        			if(((Monster)e.get(i)).GetTarget()==getID()){
 	        				((Monster)e.get(i)).setSpeedup(-1*((Monster)e.get(i)).GetAttackspeed());
 	        			}
 				
@@ -281,16 +283,26 @@ public class Player extends Creature{
 		            public void run() { 
 		            	for(int i=0;i<e.size();i++){
 		            		if(e.get(i) instanceof Monster){
-		            			if(((Monster)e.get(i)).GetTarget()==1){
+		            			
 		            				((Monster)e.get(i)).setSpeedup(0);
-		            			}
+		            			
 		  			
 		            		}
 		            	}
 		            }  
-		  		},2000);  
+		  		},5000);  
 		  		
 		  			break;
+		  		
+			case 3: 
+				setStatusOn(2); 
+		  		timer.schedule(new TimerTask() {  
+		            @Override  
+		            public void run() { 
+		            	setStatusOff(2);
+		            }  
+		  		},2000);  
+		  		break;
 		  		
 			case 4: 
 				setStatusOn(2); 
@@ -299,14 +311,14 @@ public class Player extends Creature{
 		            public void run() { 
 		            	setStatusOff(2);
 		            }  
-		  		},7000);  
+		  		},2000);  
 		  		break;
 		  		
 			case 6:
 		  		
 		  		for(int i=0;i<e.size();i++){
 	        		if(e.get(i) instanceof Monster){
-	        			if(((Monster)e.get(i)).GetTarget()==1){
+	        			if(((Monster)e.get(i)).GetTarget()==getID()){
 	        				((Monster)e.get(i)).setSpeedup(-1*((Monster)e.get(i)).GetAttackspeed());
 	        			}
 				
@@ -317,14 +329,14 @@ public class Player extends Creature{
 		            public void run() { 
 		            	for(int i=0;i<e.size();i++){
 		            		if(e.get(i) instanceof Monster){
-		            			if(((Monster)e.get(i)).GetTarget()==1){
+		            			
 		            				((Monster)e.get(i)).setSpeedup(0);
-		            			}
+		            			
 		  			
 		            		}
 		            	}
 		            }  
-		  		},5000);  
+		  		},2000);  
 		  		
 		  		break;
 		}

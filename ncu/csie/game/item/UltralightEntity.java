@@ -16,15 +16,9 @@ public class UltralightEntity extends ItemEntity{
 
 		@Override
 		public void effectResult(ArrayList<Entity> list , Entity object) {
-			Iterator<Entity> it= list.iterator();
-			
-			while(it.hasNext())
-			{
-				if(object==it.next()){
-					it.remove();
-					handler.getWorld().monsterReborn((Monster)object);
-				}
-			}
+			object.setX(-100);
+			object.setY(-100);
+			handler.getWorld().monsterReborn((Monster)object);
 		}
 
 }

@@ -16,6 +16,7 @@ public class Assets {
 	public static BufferedImage[] btn_start, btn_actor ,btn_instruct,btn_option,btn_exit,btn_right, btn_left, btn_back;
 	public static BufferedImage[] title_img;
 	public static BufferedImage flash , crystallize , ghost_walk , snowball,snowballEntity ,ultralight;
+	public static BufferedImage heal, holdmonster, monsterslow, monsterslow2, speedup, speedup2;
 	public static BufferedImage[] skill;
 	public static BufferedImage[] rollingBall;
 	public static BufferedImage[] illustrations;
@@ -346,5 +347,12 @@ public class Assets {
 		
 		
 		flashDisplay = ImageLoader.loadImage("/item/flash_ani.png");
+		
+		heal = ImageLoader.loadImage("/skill/heal.png");
+		holdmonster = ImageLoader.loadImage("/skill/holdmonster.png");
+		monsterslow = ImageLoader.loadImage("/skill/monsterslow.png");
+		monsterslow2 = ImageLoader.loadImage("/skill/monsterslow2.png");
+		speedup = ImageLoader.loadImage("/skill/speedup.png");
+		speedup2 = ImageLoader.loadImage("/skill/speedup2.png");
 	}
 }

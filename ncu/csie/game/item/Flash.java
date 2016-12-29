@@ -25,9 +25,10 @@ public class Flash extends Item{
 		String direction = handler.getWorld().getPlayers().get(playerId).getDirection();
 		Player character= handler.getWorld().getPlayers().get(playerId);
 		
+		
 		for(int i = 0 ; i < 4 ; i++)
 		{
-			if(direction == key[i])
+			if(direction.equals(key[i]))
 			{
 				character.setxMove(diffX[i] * flashDistance);
 				character.setyMove(diffY[i] * flashDistance);

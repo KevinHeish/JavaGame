@@ -27,7 +27,7 @@ public class Snowball extends Item{
 		
 		
 		for (i = 0; i < 4; i++) {
-			if (key[i] == direction) {
+			if (direction.equals(key[i])) {
 				break;
 			}
 		}
