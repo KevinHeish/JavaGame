@@ -58,11 +58,15 @@ public class Ultralight extends Item{
 		handler.getWorld().getEntityManager().addEntity(test);
 		ArrayList<Entity> sEntity = handler.getWorld().getEntityManager().getEntities();
 		
+		//handler.getWorld().getItemEffect().add(test);
+		//ArrayList<Entity> itemEffect = handler.getWorld().getItemEffect();
+		
 		
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {  
             @Override  
             public void run(){  
+            	
             	for(int j = 0; j < sEntity.size();j++)
         		{
         			if(sEntity.get(j)==test){
@@ -70,6 +74,14 @@ public class Ultralight extends Item{
         				break;
         			}
         		}
+            	/*
+            	for(int i = 0; i < itemEffect.size() ;i++)
+            	{
+            		if(itemEffect.get(i) == test){
+            			itemEffect.remove(i);
+            			break;
+            		}
+            	}*/
             }
         },500);
 		return true;

@@ -180,4 +180,10 @@ public class PlayerRender extends CreatureRender{
 	{
 		return bag;
 	}
+	
+	public int getIndex()
+	{
+		return charIndex;
+	}
+	
 }

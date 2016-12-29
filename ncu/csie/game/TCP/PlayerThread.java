@@ -39,10 +39,13 @@ public class PlayerThread implements Runnable{
 
 	@Override
 	public void run() {
-		/*while(true){
+		while(true){
 			String result = getInstruction();
+			
+			result += mySocket.getInetAddress().toString();
+			System.out.println(result);
 			host.getQueue().offer(result); 
-		}*/
+		}
 		
 	}
 	

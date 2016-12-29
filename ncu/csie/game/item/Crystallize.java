@@ -39,11 +39,14 @@ public class Crystallize extends Item{
 			boundY = 500;
 		}
 
-		CrystallizeEntity test = new CrystallizeEntity(handler , character.getX()+diffX[i]*150 +offX[i],
+		CrystallizeEntity crystallize = new CrystallizeEntity(handler , character.getX()+diffX[i]*150 +offX[i],
 				character.getY() + diffY[i]*150+offY[i] ,  boundX , boundY , i);
 		
-		handler.getWorld().getEntityManager().addEntity(test);
+		handler.getWorld().getEntityManager().addEntity(crystallize);
 		ArrayList<Entity> sEntity = handler.getWorld().getEntityManager().getEntities();
+		
+		//handler.getWorld().getItemEffect().add(crystallize);
+		//ArrayList<Entity> itemEffect = handler.getWorld().getItemEffect();
 		
 		
 		Timer timer = new Timer();
@@ -52,11 +55,19 @@ public class Crystallize extends Item{
             public void run(){  
             	for(int j = 0; j < sEntity.size();j++)
         		{
-        			if(sEntity.get(j)==test){
+        			if(sEntity.get(j)==crystallize){
         				sEntity.remove(j);
         				break;
         			}
         		}
+            	/*
+            	for(int i = 0; i < itemEffect.size() ;i++)
+            	{
+            		if(itemEffect.get(i) == crystallize){
+            			itemEffect.remove(i);
+            			break;
+            		}
+            	}*/
             }
         },5000);
 		return true;

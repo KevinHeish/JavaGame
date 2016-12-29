@@ -6,6 +6,7 @@ import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ncu.csie.game.entities.Entity;
 import ncu.csie.game.entities.EntityManager;
 import ncu.csie.game.entities.creatures.Monster;
 import ncu.csie.game.entities.creatures.Player;
@@ -20,12 +21,11 @@ public class World extends Thread{
 	private int spawnX, spawnY;
 	private int[][] tiles;
 	private Queue<Monster> monsterGenerate = new LinkedList<Monster>();
-	//Entities
 	private EntityManager entityManager;
 	private ArrayList<Player> players;
 	private ArrayList<Monster> monsters;
 	private ArrayList<Item> items;
-	private int playerNumbers = 1;
+	private ArrayList<Entity> itemEffects;
 	
 	
 	public World(Handler handler, String path){
@@ -35,6 +35,8 @@ public class World extends Thread{
 		players = new ArrayList<Player>();
 		monsters = new ArrayList<Monster>();
 		items = new ArrayList<Item>();
+		itemEffects = new ArrayList<Entity>();
+		
 		
 		Player createPlayer = new Player(handler ,100 , 100,0);
 		players.add(createPlayer);
@@ -56,7 +58,6 @@ public class World extends Thread{
 		timer.schedule(new TimerTask() {  
             @Override  
             public void run(){
-            	
         		if(monsterGenerate.peek()!=null)
         		{
         			Monster monsternew = monsterGenerate.poll();
@@ -92,14 +93,13 @@ public class World extends Thread{
 			{
 				monster = new Monster(handler, posX * Tile.TILEWIDTH, posY * Tile.TILEHEIGHT, i, 3, 5, 7);
 			} 
-			else// Piplup
+			else
 			{
 				monster = new Monster(handler, posX * Tile.TILEWIDTH, posY * Tile.TILEHEIGHT, i, 1, 2, 10);
 			}
 			entityManager.addEntity(monster);
 			monsters.add(monster);
 		}
-		assert monsters.size() ==25;
 	}
 	
 
@@ -202,6 +202,12 @@ public class World extends Thread{
 	{
 		return items;
 	}
+	
+	public ArrayList<Entity> getItemEffect()
+	{
+		return itemEffects;
+	}
+	
 
 	@Override
 	public void run()

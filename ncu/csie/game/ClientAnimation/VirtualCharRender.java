@@ -15,7 +15,7 @@ public class VirtualCharRender extends CreatureRender{
 		
 		public VirtualCharRender(GameHandler handler, float x, float y) {
 			super(handler, x , y ,Creature.DEFUAL_CREATURE_WIDTH , Creature.DEFAULT_CREATURE_HEIGHT);
-			charIndex = -1;		
+			charIndex = -121;		
 			direction = "down";
 		}
 		
@@ -30,50 +30,50 @@ public class VirtualCharRender extends CreatureRender{
 			charIndex = player;
 			switch(charIndex)
 			{
-			case 0:   //Asuna
-				animDown = new Animation(handler, 250, Assets.actor1_down, 2);
-				animUp = new Animation(handler, 250, Assets.actor1_up, 2);
-				animLeft = new Animation(handler, 250, Assets.actor1_left, 2);
-				animRight = new Animation(handler, 250, Assets.actor1_right, 2);
-				break;
-			case 1:   //Hao
-				animDown = new Animation(handler, 250, Assets.actor2_down, 2);
-				animUp = new Animation(handler, 250, Assets.actor2_up, 2);
-				animLeft = new Animation(handler, 250, Assets.actor2_left, 2);
-				animRight = new Animation(handler, 250, Assets.actor2_right, 2);
-				break;
-			case 2://Hasiaki
-				animDown = new Animation(handler, 250, Assets.actor3_down, 2);
-				animUp = new Animation(handler, 250, Assets.actor3_up, 2);
-				animLeft = new Animation(handler, 250, Assets.actor3_left, 2);
-				animRight = new Animation(handler, 250, Assets.actor3_right, 2);
-				break;
-			case 3://Jade
-				animDown = new Animation(handler, 250, Assets.actor4_down, 2);
-				animUp = new Animation(handler, 250, Assets.actor4_up, 2);
-				animLeft = new Animation(handler, 250, Assets.actor4_left, 2);
-				animRight = new Animation(handler, 250, Assets.actor4_right, 2);
-				break;
-			case 4://Sai
-				animDown = new Animation(handler, 250, Assets.actor5_down, 2);
-				animUp = new Animation(handler, 250, Assets.actor5_up, 2);
-				animLeft = new Animation(handler, 250, Assets.actor5_left, 2);
-				animRight = new Animation(handler, 250, Assets.actor5_right, 2);
-				break;
-			case 5://Yuki
-				animDown = new Animation(handler, 250, Assets.actor6_down, 2);
-				animUp = new Animation(handler, 250, Assets.actor6_up, 2);
-				animLeft = new Animation(handler, 250, Assets.actor6_left, 2);
-				animRight = new Animation(handler, 250, Assets.actor6_right, 2);
-				break;
-			case -1://ghost
-				animDown = new Animation(handler, 250, Assets.ghost_right, 2);
-				animUp = new Animation(handler, 250, Assets.ghost_right, 2);
-				animLeft = new Animation(handler, 250, Assets.ghost_left, 2);
-				animRight = new Animation(handler, 250, Assets.ghost_right, 2);
-				break;
-			default:
-				break;
+				case 0:   //Asuna
+					animDown = new Animation(handler, 250, Assets.actor1_down, 2);
+					animUp = new Animation(handler, 250, Assets.actor1_up, 2);
+					animLeft = new Animation(handler, 250, Assets.actor1_left, 2);
+					animRight = new Animation(handler, 250, Assets.actor1_right, 2);
+					break;
+				case 1:   //Hao
+					animDown = new Animation(handler, 250, Assets.actor2_down, 2);
+					animUp = new Animation(handler, 250, Assets.actor2_up, 2);
+					animLeft = new Animation(handler, 250, Assets.actor2_left, 2);
+					animRight = new Animation(handler, 250, Assets.actor2_right, 2);
+					break;
+				case 2://Hasiaki
+					animDown = new Animation(handler, 250, Assets.actor3_down, 2);
+					animUp = new Animation(handler, 250, Assets.actor3_up, 2);
+					animLeft = new Animation(handler, 250, Assets.actor3_left, 2);
+					animRight = new Animation(handler, 250, Assets.actor3_right, 2);
+					break;
+				case 3://Jade
+					animDown = new Animation(handler, 250, Assets.actor4_down, 2);
+					animUp = new Animation(handler, 250, Assets.actor4_up, 2);
+					animLeft = new Animation(handler, 250, Assets.actor4_left, 2);
+					animRight = new Animation(handler, 250, Assets.actor4_right, 2);
+					break;
+				case 4://Sai
+					animDown = new Animation(handler, 250, Assets.actor5_down, 2);
+					animUp = new Animation(handler, 250, Assets.actor5_up, 2);
+					animLeft = new Animation(handler, 250, Assets.actor5_left, 2);
+					animRight = new Animation(handler, 250, Assets.actor5_right, 2);
+					break;
+				case 5://Yuki
+					animDown = new Animation(handler, 250, Assets.actor6_down, 2);
+					animUp = new Animation(handler, 250, Assets.actor6_up, 2);
+					animLeft = new Animation(handler, 250, Assets.actor6_left, 2);
+					animRight = new Animation(handler, 250, Assets.actor6_right, 2);
+					break;
+				case -1://ghost
+					animDown = new Animation(handler, 250, Assets.ghost_right, 2);
+					animUp = new Animation(handler, 250, Assets.ghost_right, 2);
+					animLeft = new Animation(handler, 250, Assets.ghost_left, 2);
+					animRight = new Animation(handler, 250, Assets.ghost_right, 2);
+					break;
+				default:
+					break;
 			}
 		}
 		
@@ -114,4 +114,10 @@ public class VirtualCharRender extends CreatureRender{
 			updatePosition(x, y);
 			direction = dir;
 		}
+		
+		public int getIndex()
+		{
+			return charIndex;
+		}
+		
 }

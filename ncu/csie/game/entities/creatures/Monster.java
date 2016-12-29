@@ -12,6 +12,7 @@ import ncu.csie.game.gfx.Animation;
 import ncu.csie.game.gfx.Assets;
 import ncu.csie.game.item.Item;
 import ncu.csie.game.item.ItemEntity;
+import ncu.csie.game.item.SnowballEntity;
 /*
 import ncu.csie.game.item.Item;
 import ncu.csie.game.item.ItemEntity;
@@ -201,6 +202,8 @@ public class Monster extends Creature{
 		ArrayList<Entity> e = handler.getWorld().getEntityManager().getEntities();
 		
 		for(int i = 0 ;i<e.size();i++){
+			if(e.get(i) == null || this == null) continue; 
+			
 			if(e.get(i).equals(this)){
 				continue;
 			}
@@ -228,18 +231,7 @@ public class Monster extends Creature{
 					ArrayList<Entity> list = handler.getWorld().getEntityManager().getEntities();
 					((ItemEntity) e.get(i)).effectResult(list, this);
 					
-					/*
-					if(e.get(i).getClass().equals(SnowballEntity.class))
-					{
-						for(int index = 0 ; index < list.size(); index++)
-						{
-							if(e.get(i) == list.get(index))
-							{
-								list.remove(index);
-							}
-						}
-					}
-					*/
+					
 				}
 				
 				else if(e.get(i) instanceof Item){
@@ -251,7 +243,7 @@ public class Monster extends Creature{
 		return false;
 	}
 
-	//
+	
 	public int GetID()
 	{
 		return ID;

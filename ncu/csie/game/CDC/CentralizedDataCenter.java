@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.json.*;
 
-
+import ncu.csie.game.entities.Entity;
 import ncu.csie.game.entities.creatures.Monster;
 import ncu.csie.game.entities.creatures.Player;
 import ncu.csie.game.item.Item;
@@ -30,7 +30,9 @@ public class CentralizedDataCenter {
 		ArrayList<Player> playerList = handler.getWorld().getPlayers();
 		ArrayList<Monster> monsterList = handler.getWorld().getMonsters();
 		ArrayList<Item> itemList  = handler.getWorld().getItems();
+		//ArrayList<Entity> effectList = handler.getWorld().getItemEffect();
 		JSONArray allInfo = new JSONArray();
+		
 		
 		Map count = new HashMap();
 		
@@ -90,6 +92,20 @@ public class CentralizedDataCenter {
 			JSONObject JSONItem = new JSONObject(map);
 			allInfo.put(JSONItem);
 		}
+		/*
+		for(int i = 0 ; i < effectList.size() ; i++)
+		{
+			Map map = new HashMap();
+			
+			map.put("id",effectList);
+			map.put("x", effectList.get(i).getX());
+			map.put("y", effectList.get(i).getY());
+			map.put("direction", effectList.get(i).getDirection());
+			
+			JSONObject JSONMonster = new JSONObject(map);
+			allInfo.put(JSONMonster);
+		}
+		*/
 		result = allInfo.toString();
 		
 		return result;

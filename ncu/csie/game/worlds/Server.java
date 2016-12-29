@@ -17,8 +17,7 @@ public class Server {
 		handler.setWorld(world);
 		TCPServer.initTCPServer(handler);
 		UDPClient.initBroadcast(handler);
-		
-		
+			
 		world.start();
 	}
 }

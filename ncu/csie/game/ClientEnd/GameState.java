@@ -40,6 +40,12 @@ public class GameState extends State{
 		{
 			handler.getGame().getPlayerRender().setcharIndex(-1);
 		}
+		if(isGameEnd())
+		{
+			handler.getGame().buildEnd();
+			State.setState(handler.getGame().endState);
+		}
+		
 		
 		Playerinterface.tick();
 	}
@@ -79,6 +85,25 @@ public class GameState extends State{
 		
 		
 	}
+	
+	public boolean isGameEnd()
+	{
+		int count = 0;
+		
+		if(handler.getGame().getPlayerRender().getIndex()==-1)
+			count++;
+		
+		for(int i = 0 ; i < 3 ; i++)
+		{
+			if(handler.getGame().getOtherPlayers()[i].getIndex() == -1)
+				count++;
+			if(count==1)return true;
+			
+		}
+		
+		return false;
+	}
+	
 	
 	public void skilldraw(){
 		if(handler.getGame().getPlayerRender().getSkillUse())
