@@ -9,8 +9,10 @@ public class Usecase extends BasicObject{
 		super(x, y);
 		this.width = 120;
 		this.height = 80;
+		setPort();
 	}
 
+	
 	@Override
 	public void draw(Graphics g) {    
         g.setColor(Color.GRAY);
@@ -18,7 +20,13 @@ public class Usecase extends BasicObject{
         g.setColor(Color.BLACK);
         g.drawOval(x , y , width, height);
         
-        
+        if(isSelected==true){
+	        for(int i = 0 ; i < 4 ; i++){
+	        	ports[i].draw(g);
+	        }
+        }
 	}
+	
+	
 	
 }

@@ -29,7 +29,7 @@ public class CompositionLineButton extends JButton implements ActionListener{
 		}
 		
 		setEnabled(false);
-		controller.getCanvas().setMode(mode);
+		controller.getCanvas().setState(State.COMPOSITION_LINE);
 		controller.getCanvas().addMouseListener(mode);
 	}
 

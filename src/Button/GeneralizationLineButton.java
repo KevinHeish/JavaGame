@@ -28,7 +28,7 @@ public class GeneralizationLineButton extends JButton implements ActionListener{
 		}
 		
 		setEnabled(false);
-		controller.getCanvas().setMode(mode);
+		controller.getCanvas().setState(State.GENERALIZATION_LINE);
 		controller.getCanvas().addMouseListener(mode);
 	}
 

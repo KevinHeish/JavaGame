@@ -30,7 +30,7 @@ public class UseCaseButton extends JButton implements ActionListener{
 		}
 		
 		setEnabled(false);
-		controller.getCanvas().setMode(mode);
+		controller.getCanvas().setState(State.USE_CASE);
 		controller.getCanvas().addMouseListener(mode);
 		
 	}

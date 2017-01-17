@@ -15,7 +15,22 @@ public class Port {
 	public void draw(Graphics g)
 	{
 		g.setColor(Color.black);
-		g.drawRect(x, y, 5, 5);
+		g.fillRect(x, y, 5, 5);
 	}
 	
+	public int getX()
+	{
+		return x;
+	}
+	
+	public int getY()
+	{
+		return y;
+	}
+	
+	public void setLocation(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
 }

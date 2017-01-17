@@ -29,8 +29,9 @@ public class SelectButton extends JButton implements ActionListener{
 		}
 		
 		setEnabled(false);
-		controller.getCanvas().setMode(mode);
+		controller.getCanvas().setState(State.SELECT);
 		controller.getCanvas().addMouseListener(mode);
+		controller.getCanvas().addMouseMotionListener(mode);
 	}
 
 }

@@ -9,15 +9,9 @@ public class ClassObject extends BasicObject{
 		super(x, y);
 		this.width = 80;
 		this.height = 120;
+		setPort();
 	}
 	
-	public void setPort()
-	{
-		ports[0] = new Port(x + (width/2) , y);
-		ports[1] = new Port(x + width  , y + (height/2) );
-		ports[2] = new Port(x + (width/2) , y + height);
-		ports[3] = new Port(x , y + (height/2) );
-	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -28,7 +22,7 @@ public class ClassObject extends BasicObject{
         g.drawLine(x , y + height/3 ,x + width ,y + height/3);
         g.drawLine(x , y + 2*height/3 ,x + width ,y + 2*height/3);
         
-        if(isChoosed){
+        if(isSelected==true){
 	        for(int i = 0 ; i < 4 ; i++){
 	        	ports[i].draw(g);
 	        }

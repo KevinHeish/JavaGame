@@ -30,8 +30,7 @@ public class AssociateLineButton extends JButton implements ActionListener{
 		
 		
 		setEnabled(false);
-		controller.getCanvas().setMode(mode);
-		
+		controller.getCanvas().setState(State.ASSOCIATION_LINE);
 		controller.getCanvas().addMouseListener(mode);
 		
 	}

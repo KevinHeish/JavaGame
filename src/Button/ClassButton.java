@@ -28,7 +28,7 @@ public class ClassButton extends JButton implements ActionListener{
 		}
 		
 		setEnabled(false);
-		controller.getCanvas().setMode(mode);
+		controller.getCanvas().setState(State.CLASS);
 		controller.getCanvas().addMouseListener(mode);
 		
 	}
