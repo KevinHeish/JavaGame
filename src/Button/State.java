@@ -1,0 +1,6 @@
+package Button;
+
+public enum State {
+	SELECT, ASSOCIATION_LINE, GENERALIZATION_LINE,
+	COMPOSITION_LINE , CLASS, USE_CASE;
+}
